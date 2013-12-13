@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 {{ requirement.title }}
-
 {% for bug in bug %}
     {% if bug.requirement.id == requirement.id %}
     <ul>
