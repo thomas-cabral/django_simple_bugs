@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 {{ requirement.title }}
 
 {% for bug in bug %}
@@ -11,5 +7,4 @@
 {{ bug.title }}
     {% endif %}
 {% endfor %}
-</body>
-</html>
+{% endblock %}
