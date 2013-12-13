@@ -4,7 +4,11 @@
 
 {% for bug in bug %}
     {% if bug.requirement.id == requirement.id %}
-{{ bug.title }}
+    <ul>
+        <li>
+            {{ bug.title }} {{ bug.id }}
+        </li>
+    </ul>
     {% endif %}
 {% endfor %}
 {% endblock %}
