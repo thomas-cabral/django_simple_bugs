@@ -3,6 +3,10 @@ from django.views import generic
 from .models import Bug, Requirement
 
 
+class Index(generic.TemplateView):
+    template_name = 'simple_bugs/index.html'
+
+
 class BugList(generic.ListView):
     model = Bug
     template_name = 'simple_bugs/bug_list.html'
@@ -21,5 +25,5 @@ class RequirementDetail(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(RequirementDetail, self).get_context_data(**kwargs)
-        context['bug'] = Bug.objects.filter()
+        context['bug'] = Bug.objects.select_related()
         return context

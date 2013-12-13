@@ -3,8 +3,8 @@
 {{ requirement.title }}
 
 {% for bug in bug %}
-    {% if bug.requirement.id == requirement.id %}
-{{ bug.title }}
-    {% endif %}
+{% if bug.requirement.id == requirement.id %}
+    {{ bug.title }}
+{% endif %}
 {% endfor %}
 {% endblock %}
