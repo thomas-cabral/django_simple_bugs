@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+{% for bug in bug %}
+{{ bug.title }}
+    {% if bug.requirement %}
+    {{ bug.requirement.id }}
+    {% endif %}
+{% endfor %}
+</body>
+</html>
