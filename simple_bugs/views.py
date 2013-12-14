@@ -22,8 +22,3 @@ class RequirementList(generic.ListView):
 class RequirementDetail(generic.DetailView):
     model = Requirement
     template_name = 'simple_bugs/requirement_detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(RequirementDetail, self).get_context_data(**kwargs)
-        context['bug'] = Bug.objects.select_related()
-        return context

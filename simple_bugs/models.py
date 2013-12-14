@@ -26,7 +26,7 @@ class Bug(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     #relationships
     user = models.ForeignKey(User)
-    requirement = models.OneToOneField(Requirement, null=True, blank=True)
+    requirement = models.ForeignKey(Requirement, null=True, blank=True)
 
     def __unicode__(self):
         return self.title

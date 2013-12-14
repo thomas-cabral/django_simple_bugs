@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 {{ requirement.title }}
-{% for bug in bug %}
-    {% if bug.requirement.id == requirement.id %}
-    <ul>
-        <li>
-            {{ bug.title }} {{ bug.id }}
-        </li>
-    </ul>
-    {% endif %}
-{% endfor %}
+    <br>
+Related Bugs:
+<ul>
+    {% for bug in requirement.bug_set.all %}
+    <li>
+        {{ bug.title }} {{ bug.id }}
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}
