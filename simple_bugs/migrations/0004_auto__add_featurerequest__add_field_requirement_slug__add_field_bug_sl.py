@@ -16,7 +16,7 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=55)),
             ('detail', self.gf('django.db.models.fields.TextField')()),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, null=True, blank=True)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, blank=True)),
             ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('updated_on', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
@@ -26,12 +26,12 @@ class Migration(SchemaMigration):
 
         # Adding field 'Requirement.slug'
         db.add_column(u'simple_bugs_requirement', 'slug',
-                      self.gf('django.db.models.fields.SlugField')(max_length=50, null=True, blank=True),
+                      self.gf('django.db.models.fields.SlugField')(default='', max_length=50, blank=True),
                       keep_default=False)
 
         # Adding field 'Bug.slug'
         db.add_column(u'simple_bugs_bug', 'slug',
-                      self.gf('django.db.models.fields.SlugField')(max_length=50, null=True, blank=True),
+                      self.gf('django.db.models.fields.SlugField')(default='', max_length=50, blank=True),
                       keep_default=False)
 
 
@@ -98,7 +98,7 @@ class Migration(SchemaMigration):
             'detail': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'requirement': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['simple_bugs.Requirement']", 'null': 'True', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '55'}),
             'updated_on': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
@@ -109,7 +109,7 @@ class Migration(SchemaMigration):
             'detail': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'requirement': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['simple_bugs.Requirement']", 'null': 'True', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '55'}),
             'updated_on': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
@@ -119,7 +119,7 @@ class Migration(SchemaMigration):
             'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'detail': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '55'}),
             'updated_on': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
