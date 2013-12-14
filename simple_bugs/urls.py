@@ -6,6 +6,7 @@ import views
 urlpatterns = patterns('',
     url(r'^$', views.Index.as_view(), name='index'),
     url(r'^bugs/$', views.BugList.as_view(), name='bug_index'),
+    url(r'^bugs/(?P<pk>\d+)/$', views.BugDetail.as_view(), name='bug_detail',),
     url(r'^requirement/$', views.RequirementList.as_view(), name='requirement_list'),
-    url(r'^requirement/(?P<pk>\d+)/$', views.RequirementDetail.as_view(), name='requirement_detail')
+    url(r'^requirement/(?P<pk>\d+)/$', views.RequirementDetail.as_view(), name='requirement_detail'),
     )

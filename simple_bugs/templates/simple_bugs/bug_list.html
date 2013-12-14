@@ -1,9 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
+<table>
+<thead>
+<tr>
+    <th>
+        Bug
+    </th>
+    <th>
+        Relation
+    </th>
+    <th>
+        Date Created
+    </th>
+    <th>
+        Date Updated
+    </th>
+</tr>
+</thead>
+<tbody>
 {% for bug in bug %}
-{{ bug.title }}
-    {% if bug.requirement %}
-    {{ bug.requirement.id }}
-    {% endif %}
+<tr>
+<td>
+    {{ bug.title }}
+</td>
+<td>
+    <a href="{% url 'simple_bugs:requirement_detail' bug.requirement.id %}">{{ bug.requirement.title }}</a>
+</td>
+<td>
+    {{ bug.created_on }}
+</td>
+<td>
+    {{ bug.updated_on }}
+</td>
+</tr>
 {% endfor %}
+</tbody>
+</table>
 {% endblock %}

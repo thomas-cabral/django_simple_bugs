@@ -16,6 +16,9 @@ class Requirement(models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return '/requirement/%i/' % self.id
+
 
 class Bug(models.Model):
     #data fields
@@ -30,3 +33,6 @@ class Bug(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return '/bugs/%i/' % self.id

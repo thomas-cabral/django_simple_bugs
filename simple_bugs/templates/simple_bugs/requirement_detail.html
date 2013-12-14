@@ -6,7 +6,7 @@ Related Bugs:
 <ul>
     {% for bug in requirement.bug_set.all %}
     <li>
-        {{ bug.title }} {{ bug.id }}
+        <a href="{% url 'simple_bugs:bug_detail' bug.id %}">{{ bug.title }}</a>
     </li>
     {% endfor %}
 </ul>

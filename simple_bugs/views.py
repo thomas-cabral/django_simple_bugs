@@ -13,6 +13,12 @@ class BugList(generic.ListView):
     context_object_name = 'bug'
 
 
+class BugDetail(generic.DetailView):
+    model = Bug
+    template_name = 'simple_bugs/bug_detail.html'
+    context_object_name = 'bug'
+
+
 class RequirementList(generic.ListView):
     model = Requirement
     template_name = 'simple_bugs/requirement_list.html'
