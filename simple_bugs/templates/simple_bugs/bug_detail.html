@@ -1,4 +1,4 @@
 {% extends 'base.html' %}
 {% block content %}
-    Name:{{ bug.title }} Detail:{{ bug.detail }}
+    Name:{{ bug.title }} Detail:{{ bug.detail|safe }}
 {% endblock %}
