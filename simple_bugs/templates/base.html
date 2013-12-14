@@ -5,6 +5,7 @@
 
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% block extrahead %}{% endblock %}
 </head>
 <body>
 {% block navbar %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block extrahead %}
+    {% load wysiwyg %}{% wysiwyg_setup %}
+{% endblock %}
+{% block content %}
+    {% load crispy_forms_filters %}
+<div class="row">
+<div class="col-lg-12">
+    <div class="well">
+    <form role="form" action="{% url 'simple_bugs:bug_create' %}" method="post">{% csrf_token %}
+        <fieldset>
+            <legend>Create A New Bug</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <input class="btn btn-primary" type="submit">
+    </form>
+    </div>
+</div>
+</div>
+{% wysiwyg_editor 'id_detail' %}
+{% endblock %}

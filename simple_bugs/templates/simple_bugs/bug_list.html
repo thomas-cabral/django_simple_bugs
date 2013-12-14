@@ -21,10 +21,14 @@
 {% for bug in bug %}
 <tr>
 <td>
-    {{ bug.title }}
+    <a href="{% url 'simple_bugs:bug_detail' bug.id %}">{{ bug.title }}</a>
 </td>
 <td>
+    {% if bug.requirement %}
     <a href="{% url 'simple_bugs:requirement_detail' bug.requirement.id %}">{{ bug.requirement.title }}</a>
+    {% else %}
+    None
+    {% endif %}
 </td>
 <td>
     {{ bug.created_on }}
