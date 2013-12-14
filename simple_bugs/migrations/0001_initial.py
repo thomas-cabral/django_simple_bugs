@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
+import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
@@ -13,6 +13,9 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=55)),
             ('detail', self.gf('django.db.models.fields.TextField')()),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, null=True, blank=True)),
+            ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated_on', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
         ))
         db.send_create_signal(u'simple_bugs', ['Requirement'])
@@ -22,10 +25,26 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=55)),
             ('detail', self.gf('django.db.models.fields.TextField')()),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, null=True, blank=True)),
+            ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated_on', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('requirement', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['simple_bugs.Requirement'], unique=True)),
+            ('requirement', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['simple_bugs.Requirement'], null=True, blank=True)),
         ))
         db.send_create_signal(u'simple_bugs', ['Bug'])
+
+        # Adding model 'FeatureRequest'
+        db.create_table(u'simple_bugs_featurerequest', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=55)),
+            ('detail', self.gf('django.db.models.fields.TextField')()),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, null=True, blank=True)),
+            ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated_on', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('requirement', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['simple_bugs.Requirement'], null=True, blank=True)),
+        ))
+        db.send_create_signal(u'simple_bugs', ['FeatureRequest'])
 
 
     def backwards(self, orm):
@@ -34,6 +53,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Bug'
         db.delete_table(u'simple_bugs_bug')
+
+        # Deleting model 'FeatureRequest'
+        db.delete_table(u'simple_bugs_featurerequest')
 
 
     models = {
@@ -75,17 +97,34 @@ class Migration(SchemaMigration):
         },
         u'simple_bugs.bug': {
             'Meta': {'object_name': 'Bug'},
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'detail': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'requirement': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['simple_bugs.Requirement']", 'unique': 'True'}),
+            'requirement': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['simple_bugs.Requirement']", 'null': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '55'}),
+            'updated_on': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+        },
+        u'simple_bugs.featurerequest': {
+            'Meta': {'object_name': 'FeatureRequest'},
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'detail': ('django.db.models.fields.TextField', [], {}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'requirement': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['simple_bugs.Requirement']", 'null': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '55'}),
+            'updated_on': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'simple_bugs.requirement': {
             'Meta': {'object_name': 'Requirement'},
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'detail': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '55'}),
+            'updated_on': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         }
     }
