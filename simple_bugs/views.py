@@ -83,6 +83,8 @@ class RequirementCreate(SaveUser, generic.CreateView):
 
 class RequirementUpdate(generic.UpdateView):
     model = Requirement
+    template_name = 'simple_bugs/requirement_update.html'
+    form_class = forms.RequirementForm
 
 
 class RequirementDelete(generic.DeleteView):
