@@ -27,8 +27,13 @@ class Requirement(models.Model):
         return '/requirement/%i/' % self.id
 
 
-class Bug(models.Model):
+class Case(models.Model):
+    type_choice = (
+        ('BUG', 'Bug'),
+        ('FEATURE_REQUEST', 'Feature Request'),
+    )
     #data fields
+    type = models.CharField(max_length=155, choices=type_choice)
     title = models.CharField(max_length=55)
     detail = models.TextField()
     slug = models.SlugField(blank=True, null=True)
@@ -45,28 +50,4 @@ class Bug(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = slugify(self.title)
-        super(Bug, self).save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return '/bugs/%i/' % self.id
-
-
-class FeatureRequest(models.Model):
-    #data fields
-    title = models.CharField(max_length=55)
-    detail = models.TextField()
-    slug = models.SlugField(blank=True, null=True)
-    #date fields
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
-    #relationships
-    user = models.ForeignKey(User)
-    requirement = models.ForeignKey(Requirement, null=True, blank=True)
-
-    def __unicode__(self):
-        return self.title
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.title)
-        super(FeatureRequest, self).save(*args, **kwargs)
+        super(Case, self).save(*args, **kwargs)

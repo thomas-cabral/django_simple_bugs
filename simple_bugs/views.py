@@ -3,7 +3,7 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from .models import Bug, Requirement
+from .models import Case, Requirement
 import forms
 
 
@@ -27,30 +27,30 @@ class Index(generic.TemplateView):
     template_name = 'simple_bugs/index.html'
 
 
-class BugList(generic.ListView):
-    model = Bug
-    template_name = 'simple_bugs/bug_list.html'
-    context_object_name = 'bug'
+class CaseList(generic.ListView):
+    model = Case
+    template_name = 'simple_bugs/case_list.html'
+    context_object_name = 'case'
 
 
-class BugDetail(generic.DetailView):
-    model = Bug
-    template_name = 'simple_bugs/bug_detail.html'
-    context_object_name = 'bug'
+class CaseDetail(generic.DetailView):
+    model = Case
+    template_name = 'simple_bugs/case_detail.html'
+    context_object_name = 'case'
 
 
-class BugCreate(SaveUser, generic.CreateView):
-    model = Bug
-    form_class = forms.BugForm
-    template_name = 'simple_bugs/bug_create.html'
+class CaseCreate(SaveUser, generic.CreateView):
+    model = Case
+    form_class = forms.CaseForm
+    template_name = 'simple_bugs/case_create.html'
 
 
-class BugUpdate(generic.CreateView):
-    model = Bug
+class CaseUpdate(generic.CreateView):
+    model = Case
 
 
-class BugDelete(generic.DeleteView):
-    model = Bug
+class CaseDelete(generic.DeleteView):
+    model = Case
 
 
 class RequirementList(generic.ListView):

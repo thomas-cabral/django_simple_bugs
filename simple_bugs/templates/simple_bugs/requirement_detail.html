@@ -2,12 +2,11 @@
 {% block content %}
 {{ requirement.title }}
     <br>
-Related Bugs:<span class="badge">{{ requirement.bug_set.count }}</span>
-<ul>
-    {% for bug in requirement.bug_set.all %}
-    <li>
-        <a href="{% url 'simple_bugs:bug_detail' bug.id %}">{{ bug.title }}</a>
-    </li>
-    {% endfor %}
-</ul>
+Related Cases:<span class="badge">{{ requirement.case_set.count }}</span>
+
+{% for case in requirement.case_set.all %}
+    {% if case.type == 'BUG' %}
+    {{ case.title }}
+    {% endif %}
+{% endfor %}
 {% endblock %}

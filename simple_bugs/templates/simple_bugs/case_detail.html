@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+<div class="col-lg-3">
+<h1 class='page-header'>{{ bug.title }}</h1>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-12">
+    {{ bug.detail|safe }}
+</div>
+</div>
+{% endblock %}

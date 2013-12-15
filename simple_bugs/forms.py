@@ -1,11 +1,11 @@
 __author__ = 'Thomas'
 from django import forms
 from django.utils.translation import ugettext as _
-from .models import Bug
+from .models import Case
 
 
-class BugForm(forms.ModelForm):
+class CaseForm(forms.ModelForm):
 
     class Meta:
-        model = Bug
+        model = Case
         fields = ('title', 'detail', 'requirement')
