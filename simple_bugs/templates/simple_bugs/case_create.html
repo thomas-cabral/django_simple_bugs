@@ -7,7 +7,7 @@
 <div class="row">
 <div class="col-lg-12">
     <div class="well">
-    <form role="form" action="{% url 'simple_bugs:bug_create' %}" method="post">{% csrf_token %}
+    <form role="form" action="{% url 'simple_bugs:case_create' %}" method="post">{% csrf_token %}
         <fieldset>
             <legend>Create A New Bug</legend>
             {{ form|crispy }}
