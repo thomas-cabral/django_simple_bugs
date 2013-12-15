@@ -36,6 +36,7 @@ class Case(models.Model):
     type = models.CharField(max_length=155, choices=type_choice)
     title = models.CharField(max_length=55)
     detail = models.TextField()
+    closed = models.BooleanField()
     slug = models.SlugField(blank=True, null=True)
     #date fields
     created_on = models.DateTimeField(auto_now_add=True)
@@ -53,4 +54,4 @@ class Case(models.Model):
         super(Case, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return '/case/%i/' % self.id
+        return '/cases/%i/' % self.id

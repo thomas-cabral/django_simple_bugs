@@ -25,7 +25,11 @@
 {% for case in case %}
 <tr>
 <td>
-    {{ case.get_type_display }}
+    {% if case.type == 'BUG' %}
+    <i class="fa fa-bug fa-lg"></i>
+    {% elif case.type == 'FEATURE_REQUEST' %}
+    <i class="fa fa-lightbulb-o fa-lg"></i>
+    {% endif %}
 </td>
 <td>
     <a href="{% url 'simple_bugs:case_detail' case.id %}">{{ case.title }}</a>

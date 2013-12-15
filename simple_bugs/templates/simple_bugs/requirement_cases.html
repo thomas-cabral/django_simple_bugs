@@ -1,5 +1,6 @@
 {% extends 'simple_bugs/base.html' %}
 {% block content %}
+<h1 class="page-header">Related Cases</h1>
 <table class="table">
 <thead>
 <tr>
@@ -18,7 +19,11 @@
 {% for case in requirement.case_set.all %}
 <tr>
     <td>
-        {{ case.get_type_display }}
+    {% if case.type == 'BUG' %}
+    <i class="fa fa-bug fa-lg"></i>
+    {% elif case.type == 'FEATURE_REQUEST' %}
+    <i class="fa fa-lightbulb-o fa-lg"></i>
+    {% endif %}
     </td>
     <td>
         <a href="{% url 'simple_bugs:case_detail' case.id %}">{{ case.title }}</a>
