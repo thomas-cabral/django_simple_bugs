@@ -26,6 +26,11 @@ class SaveUser(RequireLogin, object):
 class Index(generic.TemplateView):
     template_name = 'simple_bugs/index.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs)
+        context['case_count'] = Case.objects.count()
+        return context
+
 
 class CaseList(generic.ListView):
     model = Case
