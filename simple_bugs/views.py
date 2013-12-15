@@ -14,7 +14,7 @@ class RequireLogin(object):
         return super(RequireLogin, self).dispatch(*args, **kwargs)
 
 
-class SaveUser(object):
+class SaveUser(RequireLogin, object):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -64,8 +64,14 @@ class RequirementDetail(generic.DetailView):
     template_name = 'simple_bugs/requirement_detail.html'
 
 
-class RequirementCreate(generic.CreateView):
+class RequirementCases(RequireLogin, RequirementDetail):
+    template_name = 'simple_bugs/requirement_cases.html'
+
+
+class RequirementCreate(SaveUser, generic.CreateView):
     model = Requirement
+    template_name = 'simple_bugs/requirement_create.html'
+    form_class = forms.RequirementForm
 
 
 class RequirementUpdate(generic.UpdateView):

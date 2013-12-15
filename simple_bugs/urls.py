@@ -9,5 +9,7 @@ urlpatterns = patterns('',
     url(r'^cases/(?P<pk>\d+)/$', views.CaseDetail.as_view(), name='case_detail',),
     url(r'^cases/create/$', views.CaseCreate.as_view(), name='case_create'),
     url(r'^requirement/$', views.RequirementList.as_view(), name='requirement_list'),
+    url(r'^requirement/create/$', views.RequirementCreate.as_view(), name='requirement_create'),
     url(r'^requirement/(?P<pk>\d+)/$', views.RequirementDetail.as_view(), name='requirement_detail'),
+    url(r'^requirement/(?P<pk>\d+)/cases/$', views.RequirementCases.as_view(), name='requirement_cases'),
     )

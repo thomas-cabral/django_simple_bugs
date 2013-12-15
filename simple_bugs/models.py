@@ -51,3 +51,6 @@ class Case(models.Model):
         if not self.id:
             self.slug = slugify(self.title)
         super(Case, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return '/case/%i/' % self.id

@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-{{ requirement.title }}
-    <br>
-Related Cases:<span class="badge">{{ requirement.case_set.count }}</span>
+<div class="row">
+<div class="col-sm-12">
+    <h1 class="page-header">{{ requirement.title }}</h1>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+    {{ requirement.detail|safe }}
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+    <a class="btn btn-primary" href="{% url 'simple_bugs:requirement_cases' requirement.id  %}">Related Cases <span class="badge">{{ requirement.case_set.count }}</span> </a>
+</div>
+</div>
 
-{% for case in requirement.case_set.all %}
-    {% if case.type == 'BUG' %}
-    {{ case.title }}
-    {% endif %}
-{% endfor %}
 {% endblock %}

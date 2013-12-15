@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<table class="table">
+<thead>
+<tr>
+    <th>
+        Type
+    </th>
+    <th>
+        Title
+    </th>
+    <th>
+        Date Created
+    </th>
+</tr>
+</thead>
+<tbody>
+{% for case in requirement.case_set.all %}
+<tr>
+    <td>
+        {{ case.type }}
+    </td>
+    <td>
+        <a href="{% url 'simple_bugs:case_detail' case.id %}">{{ case.title }}</a>
+    </td>
+    <td>
+        {{ case.created_on }}
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}
