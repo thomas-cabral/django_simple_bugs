@@ -15,6 +15,9 @@ class Requirement(models.Model):
     # relationships
     user = models.ForeignKey(User)
 
+    class Meta:
+        ordering = ['-created_on']
+
     def __unicode__(self):
         return self.title
 
@@ -44,6 +47,9 @@ class Case(models.Model):
     #relationships
     user = models.ForeignKey(User)
     requirement = models.ForeignKey(Requirement, null=True, blank=True)
+
+    class Meta:
+        ordering = ['-created_on']
 
     def __unicode__(self):
         return self.title
