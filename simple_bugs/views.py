@@ -89,3 +89,13 @@ class RequirementUpdate(generic.UpdateView):
 
 class RequirementDelete(generic.DeleteView):
     model = Requirement
+
+
+class Profile(RequireLogin, generic.TemplateView):
+    template_name = 'simple_bugs/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(Profile, self).get_context_data(**kwargs)
+        context['user_case'] = Case.objects.filter(user=self.request.user)
+        context['user_requirement'] = Requirement.objects.filter(user=self.request.user)
+        return context

@@ -14,6 +14,9 @@
     <li><a href="{% url 'simple_bugs:index' %}">Home</a> </li>
     <li><a href="{% url 'simple_bugs:requirement_list' %}">Requirements</a> </li>
     <li><a href="{% url 'simple_bugs:case_list' %}">Cases</a> </li>
+{% if user.is_authenticated %}
+    <li><a href="{% url 'simple_bugs:profile' user.username %}">Profile</a> </li>
+{% endif %}
 </ul>
 {% endblock %}
 <div class="container">

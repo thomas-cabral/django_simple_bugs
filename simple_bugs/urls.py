@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^requirement/(?P<pk>\d+)/update/$', views.RequirementUpdate.as_view(), name='requirement_update'),
     url(r'^requirement/(?P<pk>\d+)/$', views.RequirementDetail.as_view(), name='requirement_detail'),
     url(r'^requirement/(?P<pk>\d+)/cases/$', views.RequirementCases.as_view(), name='requirement_cases'),
+    url(r'^profile/(?P<username>\w+)/$', views.Profile.as_view(), name='profile'),
     )
