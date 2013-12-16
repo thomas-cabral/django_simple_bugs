@@ -1,0 +1,11 @@
+{% extends 'simple_bugs/base.html' %}
+{% block content %}
+<h1 class="page-header">{{ user.username|capfirst }} <small>User Profile</small></h1>
+<ol>
+    {% for case in user_case %}
+<li>
+    {{ case.title }}
+</li>
+    {% endfor %}
+</ol>
+{% endblock %}
