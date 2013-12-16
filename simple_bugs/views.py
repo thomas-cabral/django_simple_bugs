@@ -66,12 +66,12 @@ class RequirementList(generic.ListView):
     context_object_name = 'requirement'
 
 
-class RequirementDetail(generic.DetailView):
+class RequirementDetail(RequireLogin, generic.DetailView):
     model = Requirement
     template_name = 'simple_bugs/requirement_detail.html'
 
 
-class RequirementCases(RequireLogin, RequirementDetail):
+class RequirementCases(RequirementDetail):
     template_name = 'simple_bugs/requirement_cases.html'
 
 
