@@ -29,8 +29,8 @@ class Index(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
         context['case_count'] = Case.objects.count()
-        context['recent_bugs'] = Case.objects.all().filter(type='BUG').order_by('-created_on')[:5]
-        context['recent_features'] = Case.objects.all().filter(type='FEATURE_REQUEST').order_by('-created_on')[:5]
+        context['recent_bugs'] = Case.objects.filter(type='BUG', closed=False).order_by('-created_on')[:5]
+        context['recent_features'] = Case.objects.filter(type='FEATURE_REQUEST', closed=False).order_by('-created_on')[:5]
         return context
 
 
