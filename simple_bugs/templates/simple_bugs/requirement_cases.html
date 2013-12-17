@@ -13,6 +13,9 @@
     <th>
         Date Created
     </th>
+    <th>
+        Open For
+    </th>
 </tr>
 </thead>
 <tbody>
@@ -20,16 +23,19 @@
 <tr>
     <td>
     {% if case.type == 'BUG' %}
-    <i class="fa fa-bug fa-lg"></i>
+    <i class="fa fa-bug fa-lg fa-fw"></i>
     {% elif case.type == 'FEATURE_REQUEST' %}
-    <i class="fa fa-lightbulb-o fa-lg"></i>
+    <i class="fa fa-lightbulb-o fa-lg fa-fw"></i>
     {% endif %}
     </td>
     <td>
-        <a href="{% url 'simple_bugs:case_detail' case.id %}" title="{{ case.title }}">{{ case.id }}</a>
+        <a href="{% url 'simple_bugs:case_detail' case.id %}" title="{{ case.title }}">{{ case.title|truncatechars:15 }}</a>
     </td>
     <td>
         {{ case.created_on }}
+    </td>
+    <td>
+        {{ case.created_on|timesince }}
     </td>
 </tr>
 {% endfor %}

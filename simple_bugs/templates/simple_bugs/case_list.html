@@ -17,7 +17,7 @@
         Date Created
     </th>
     <th>
-        Date Updated
+        Open For
     </th>
 </tr>
 </thead>
@@ -45,7 +45,7 @@
     {{ case.created_on }}
 </td>
 <td>
-    {{ case.updated_on }}
+    {{ case.created_on|timesince }}
 </td>
 </tr>
 {% endfor %}
