@@ -96,6 +96,6 @@ class Profile(RequireLogin, generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Profile, self).get_context_data(**kwargs)
-        context['user_case'] = Case.objects.filter(user=self.request.user)
+        context['user_case'] = Case.objects.filter(user=self.request.user, closed=False)
         context['user_requirement'] = Requirement.objects.filter(user=self.request.user)
         return context
