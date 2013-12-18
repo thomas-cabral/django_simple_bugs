@@ -42,6 +42,7 @@ class Case(models.Model):
     closed = models.BooleanField()
     slug = models.SlugField(blank=True, null=True)
     #date fields
+    time_estimate = models.TimeField(null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     #relationships
