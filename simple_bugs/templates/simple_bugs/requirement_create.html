@@ -1,5 +1,7 @@
 {% extends 'simple_bugs/base.html' %}
 {% block extrahead %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'simple_bugs/chosen/chosen.min.css' %}">
     {% load wysiwyg %}{% wysiwyg_setup %}
 {% endblock %}
 {% block content %}
@@ -18,4 +20,8 @@
 </div>
 </div>
 {% wysiwyg_editor 'id_detail' %}
+{% endblock %}
+{% block js %}
+    <script src="{% static 'simple_bugs/chosen/chosen.jquery.min.js' %}"></script>
+    <script type="text/javascript">$("#id_working_on").chosen()</script>
 {% endblock %}

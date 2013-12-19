@@ -27,7 +27,6 @@
   <form action="{% comment_form_target %}" method="post">
     {% csrf_token %}
     {{ form.comment|as_crispy_field }}
-    {{ form.honeypot }}
     {{ form.content_type }}
     {{ form.object_pk }}
     {{ form.timestamp }}
