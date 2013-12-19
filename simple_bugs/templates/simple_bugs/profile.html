@@ -1,11 +1,75 @@
 {% extends 'simple_bugs/base.html' %}
 {% block content %}
-<h1 class="page-header">{{ user.username|capfirst }} <small>User Profile</small></h1>
-<ol>
-    {% for case in user_case %}
-<li>
-    {{ case.title }}
-</li>
+    <h1 class="page-header">{{ user.username|capfirst }}'s <small>Profile Page</small></h1>
+<div class="row">
+<div class="col-lg-4">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                Assigned Case{{ assigned_case|pluralize }}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for case in assigned_case %}
+        <tr>
+            <td>
+                <a href="{% url 'simple_bugs:case_detail' case.id %}">{{ case.title }}</a>
+            </td>
+        </tr>
     {% endfor %}
-</ol>
+    </tbody>
+    </table>
+</div>
+<div class="col-lg-4">
+     <table class="table">
+        <thead>
+        <tr>
+            <th>
+                Created Case{{ user_case|pluralize }}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for case in user_case %}
+        <tr>
+            <td>
+                <a href="{% url 'simple_bugs:case_detail' case.id %}">{{ case.title }}</a>
+            </td>
+        </tr>
+        {% empty %}
+            </tbody>
+            </table>
+        <a class="btn btn-primary" href="{% url 'simple_bugs:case_create' %}">Create One</a>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+<div class="col-lg-4">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                Your Requirement{{ user_requirement|pluralize }}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for requirement in user_requirement %}
+        <tr>
+            <td>
+                <a href="{% url 'simple_bugs:requirement_detail' requirement.id %}">{{ requirement.title }}</a>
+            </td>
+        </tr>
+        {% empty %}
+            </tbody>
+            </table>
+        <a class="btn btn-primary" href="{% url 'simple_bugs:requirement_create' %}">Create One</a>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+</div>
+</div>
 {% endblock %}

@@ -1,5 +1,6 @@
 {% extends 'simple_bugs/base.html' %}
 {% block content %}
+{% if user.is_authenticated %}
 <div class="row">
 <div class="col-lg-12">
     <h1 class="page-header">Dashboard</h1>
@@ -61,5 +62,13 @@
 </table>
 </div>
 </div>
+{% else %}
+    <div class="row">
+    <div class="col-lg-12">
+    <a href="/accounts/login/"><h1>Please Login</h1></a>
+    </div>
+    </div>
+
+{% endif %}
 
 {% endblock %}

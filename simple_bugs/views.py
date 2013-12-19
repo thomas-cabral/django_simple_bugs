@@ -52,8 +52,10 @@ class CaseCreate(SaveUser, generic.CreateView):
     template_name = 'simple_bugs/case_create.html'
 
 
-class CaseUpdate(RequireLogin, generic.CreateView):
+class CaseUpdate(RequireLogin, generic.UpdateView):
     model = Case
+    form_class = forms.CaseForm
+    template_name = 'simple_bugs/case_update.html'
 
 
 class CaseDelete(generic.DeleteView):
@@ -98,4 +100,5 @@ class Profile(RequireLogin, generic.TemplateView):
         context = super(Profile, self).get_context_data(**kwargs)
         context['user_case'] = Case.objects.filter(user=self.request.user, closed=False)
         context['user_requirement'] = Requirement.objects.filter(user=self.request.user)
+        context['assigned_case'] = Case.objects.filter(assigned_to=self.request.user)
         return context
