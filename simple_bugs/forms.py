@@ -15,4 +15,4 @@ class RequirementForm(forms.ModelForm):
 
     class Meta:
         model = Requirement
-        fields = ('title', 'detail')
+        fields = ('title', 'detail', 'working_on')

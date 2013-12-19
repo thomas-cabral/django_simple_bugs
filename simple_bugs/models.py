@@ -14,6 +14,7 @@ class Requirement(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     # relationships
     user = models.ForeignKey(User)
+    working_on = models.ManyToManyField(User, related_name='working on', null=True, blank=True)
 
     class Meta:
         ordering = ['-created_on']
