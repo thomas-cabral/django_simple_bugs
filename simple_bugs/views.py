@@ -51,6 +51,11 @@ class CaseCreate(SaveUser, generic.CreateView):
     form_class = forms.CaseForm
     template_name = 'simple_bugs/case_create.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(CaseCreate, self).get_context_data(**kwargs)
+        context['case'] = Case.objects.all().order_by('-created_on')[:5]
+        return context
+
 
 class CaseUpdate(RequireLogin, generic.UpdateView):
     model = Case
@@ -81,6 +86,11 @@ class RequirementCreate(SaveUser, generic.CreateView):
     model = Requirement
     template_name = 'simple_bugs/requirement_create.html'
     form_class = forms.RequirementForm
+
+    def get_context_data(self, **kwargs):
+        context = super(RequirementCreate, self).get_context_data(**kwargs)
+        context['requirement'] = Requirement.objects.all().order_by('-created_on')[:5]
+        return context
 
 
 class RequirementUpdate(RequireLogin, generic.UpdateView):

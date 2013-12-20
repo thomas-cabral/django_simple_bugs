@@ -5,7 +5,7 @@
 {% block content %}
     {% load crispy_forms_filters %}
 <div class="row">
-<div class="col-lg-12">
+<div class="col-lg-8">
     <div class="well">
     <form role="form" action="{% url 'simple_bugs:case_create' %}" method="post">{% csrf_token %}
         <fieldset>
@@ -15,6 +15,36 @@
         <input class="btn btn-primary" type="submit">
     </form>
     </div>
+</div>
+<div class="col-lg-4">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                Type
+            </th>
+            <th>
+                Recent Bugs
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for case in case %}
+        <tr>
+            <td>
+                {% if case.type == 'BUG' %}
+                <i class="fa fa-bug fa-lg fa-fw"></i>
+                {% elif case.type == 'FEATURE_REQUEST' %}
+                <i class="fa fa-lightbulb-o fa-lg fa-fw"></i>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'simple_bugs:case_detail' case.id %}">{{ case.title }}</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 </div>
 {% wysiwyg_editor 'id_detail' %}

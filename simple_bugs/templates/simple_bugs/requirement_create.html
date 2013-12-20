@@ -7,7 +7,7 @@
 {% block content %}
     {% load crispy_forms_filters %}
 <div class="row">
-<div class="col-lg-12">
+<div class="col-lg-8">
     <div class="well">
     <form role="form" action="{% url 'simple_bugs:requirement_create' %}" method="post">{% csrf_token %}
         <fieldset>
@@ -17,6 +17,29 @@
         <input class="btn btn-primary" type="submit">
     </form>
     </div>
+</div>
+<div class="col-lg-4">
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Related Requirements
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for requirement in requirement %}
+    <tr>
+        <td>
+            <a href="{% url 'simple_bugs:requirement_detail' requirement.id %}">{{ requirement.title }}</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tbody>
+
+    </tbody>
+</table>
 </div>
 </div>
 {% wysiwyg_editor 'id_detail' %}
