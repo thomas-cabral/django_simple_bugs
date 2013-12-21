@@ -37,7 +37,7 @@ class Case(models.Model):
         ('FEATURE_REQUEST', 'Feature Request'),
     )
     #data fields
-    type = models.CharField(max_length=155, choices=type_choice)
+    type = models.CharField(max_length=155, choices=type_choice, default='BUG')
     title = models.CharField(max_length=55)
     detail = models.TextField()
     closed = models.BooleanField()
@@ -49,7 +49,7 @@ class Case(models.Model):
     #relationships
     user = models.ForeignKey(User)
     assigned_to = models.ForeignKey(User, related_name='assigned', null=True, blank=True)
-    requirement = models.ForeignKey(Requirement, null=True, blank=True)
+    requirement = models.ForeignKey(Requirement, null=True, blank=True, verbose_name='Related Requirement')
 
     class Meta:
         ordering = ['-created_on']
