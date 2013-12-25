@@ -8,7 +8,7 @@ class CaseForm(forms.ModelForm):
 
     class Meta:
         model = Case
-        fields = ('type', 'title', 'detail', 'assigned_to', 'requirement')
+        fields = ('type', 'title', 'detail', 'closed', 'assigned_to', 'requirement')
 
 
 class RequirementForm(forms.ModelForm):
