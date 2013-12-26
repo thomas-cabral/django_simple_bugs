@@ -21,6 +21,7 @@
     </th>
 </tr>
 </thead>
+<a class="btn btn-primary pull-right" href="{% url 'simple_bugs:case_create' %}"><i class="fa fa-plus fa-fw"></i> Add Case</a>
 <tbody>
 {% for case in case %}
 <tr>
@@ -51,5 +52,4 @@
 {% endfor %}
 </tbody>
 </table>
-<a class="btn btn-primary" href="{% url 'simple_bugs:case_create' %}"><i class="fa fa-plus fa-fw"></i> Add Case</a>
 {% endblock %}
