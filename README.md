@@ -1,3 +1,5 @@
 Django Simple Bugs
 ==================
-I plan on spending the next few months on this app. The goal of this app is to have a bug system that anyone can use that is simple to deploy.
+This is a simple bug tracking/requirements app for django. It should be used for projects that require a way to track issues for a web app in development to production.
+
+I am going to be maintaining this as something I use for clients and I would love to get feature requests for things that it should do/must do.
