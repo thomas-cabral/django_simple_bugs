@@ -23,8 +23,8 @@
     {% load comments crispy_forms_filters %}
     {% render_comment_list for case %}
     {% get_comment_form for case as form %}
+<form action="{% comment_form_target %}" method="post">
 <table>
-  <form action="{% comment_form_target %}" method="post">
     {% csrf_token %}
     {{ form.comment|as_crispy_field }}
     {{ form.content_type }}
@@ -37,9 +37,8 @@
         <input type="hidden" name="next" value="{% url 'simple_bugs:case_detail' case.id %}" />
       </td>
     </tr>
-  </form>
 </table>
-
+</form>
 </div>
 </div>
 {% endblock %}

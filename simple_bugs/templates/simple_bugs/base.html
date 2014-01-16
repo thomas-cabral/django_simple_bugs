@@ -11,14 +11,35 @@
 </head>
 <body>
 {% block navbar %}
-<ul class="nav nav-tabs">
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/">Simple-Bugs</a>
+  </div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<ul class="nav navbar-nav">
     <li><a href="{% url 'simple_bugs:index' %}">Home</a> </li>
     <li><a href="{% url 'simple_bugs:requirement_list' %}">Requirements</a> </li>
     <li><a href="{% url 'simple_bugs:case_list' %}">Cases</a> </li>
+    <li><a href="/search/">Search</a> </li>
 {% if user.is_authenticated %}
     <li><a href="{% url 'simple_bugs:profile' user.username %}">Profile</a> </li>
 {% endif %}
 </ul>
+<form class="navbar-right navbar-form" method="get" action="/search/.">
+    <div class="form-group">
+    <input class="textinput textInput form-control" id="id_q" name="q" type="text">
+    </div>
+    <button type="submit" value="Search" class="btn btn-default">Search</button>
+</form>
+</div>
+</nav>
 {% endblock %}
 <div class="container">
 {% block content %}

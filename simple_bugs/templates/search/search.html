@@ -1,0 +1,88 @@
+{% extends 'simple_bugs/base.html' %}
+
+{% block content %}
+{% load crispy_forms_filters %}
+    <div class="col-lg-offset-4"><h2>Search</h2></div>
+<div class="row">
+<div class="col-lg-offset-4 col-lg-4 well">
+    <form method="get" action=".">
+        <table>
+            {{ form|crispy }}
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input class="btn btn-default" type="submit" value="Search">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div></div>
+        {% if query %}
+            <h3>Results</h3>
+
+            {% if page.has_previous or page.has_next %}
+                <div>
+                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                    |
+                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            {# Show some example queries to run, maybe query syntax, something else? #}
+        {% endif %}
+
+            <div class="col-lg-12">
+            <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Relation
+                </th>
+                <th>
+                    Date Created
+                </th>
+                <th>
+                    Open For
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for result in page.object_list %}
+                <tr>
+                    <td>
+                        {% if result.object.type == 'BUG' %}
+                        <i class="fa fa-bug fa-lg fa-fw"></i>
+                        {% elif result.object.type == 'FEATURE_REQUEST' %}
+                        <i class="fa fa-lightbulb-o fa-lg fa-fw"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
+                    </td>
+                    <td>
+                    {% if result.object.requirement %}
+                        <a href="{% url 'simple_bugs:requirement_detail' result.object.requirement.id %}">{{ result.object.requirement.title }}</a>
+                    {% else %}
+                        None
+                    {% endif %}
+                    </td>
+                    <td>
+                        {{ result.object.created_on }}
+                    </td>
+                    <td>
+                        {{ result.object.created_on|timesince }}
+                    </td>
+                </tr>
+            {% empty %}
+                <p>No results found.</p>
+            {% endfor %}
+            </tbody>
+            </table>
+            </div>
+{% endblock %}
