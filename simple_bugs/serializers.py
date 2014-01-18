@@ -7,9 +7,10 @@ from .models import Case
 class CaseSerializer(serializers.Serializer):
     class Meta:
         model = Case
-        fields = ('pk', 'title', 'detail', 'closed', 'user')
+        fields = ('pk', 'type', 'title', 'detail', 'closed', 'user')
 
     pk = serializers.Field()
+    type = serializers.ChoiceField(choices=Case.type_choice)
     title = serializers.CharField(max_length=55)
     detail = serializers.CharField(widget=widgets.Textarea, max_length=100000)
     closed = serializers.BooleanField(required=False)
@@ -17,10 +18,11 @@ class CaseSerializer(serializers.Serializer):
 
     def restore_object(self, attrs, instance=None):
         if instance:
+            instance.type = attrs.get('type', instance.type)
             instance.title = attrs.get('title', instance.title)
             instance.detail = attrs.get('detail', instance.detail)
             instance.closed = attrs.get('closed', instance.closed)
-
+            return instance
         return Case(**attrs)
 
 
