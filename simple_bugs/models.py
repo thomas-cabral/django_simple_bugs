@@ -47,7 +47,7 @@ class Case(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     #relationships
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='cases')
     assigned_to = models.ForeignKey(User, related_name='assigned', null=True, blank=True)
     requirement = models.ForeignKey(Requirement, null=True, blank=True, verbose_name='Related Requirement')
 
