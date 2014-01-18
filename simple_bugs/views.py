@@ -112,3 +112,40 @@ class Profile(RequireLogin, generic.TemplateView):
         context['user_requirement'] = Requirement.objects.filter(user=self.request.user)
         context['assigned_case'] = Case.objects.filter(assigned_to=self.request.user)
         return context
+
+
+# APIs
+
+from rest_framework import generics
+from rest_framework import permissions
+from .serializers import CaseSerializer, UserSerializer
+from django.contrib.auth.models import User
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class CaseAPIList(generics.ListCreateAPIView):
+    queryset = Case.objects.all()
+    serializer_class = CaseSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def pre_save(self, obj):
+        obj.user = self.request.user
+
+
+class CaseAPIDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Case.objects.all()
+    serializer_class = CaseSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def pre_save(self, obj):
+        obj.user = self.request.user
+
