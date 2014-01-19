@@ -14,7 +14,7 @@ class RequireLogin(object):
         return super(RequireLogin, self).dispatch(*args, **kwargs)
 
 
-class SaveUser(RequireLogin, object):
+class SaveUser(RequireLogin):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -38,6 +38,7 @@ class CaseList(generic.ListView):
     model = Case
     template_name = 'simple_bugs/case_list.html'
     context_object_name = 'case'
+    paginate_by = 10
 
 
 class CaseDetail(generic.DetailView):
