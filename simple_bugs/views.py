@@ -136,7 +136,7 @@ class UserDetail(generics.RetrieveAPIView):
 class CaseAPIList(generics.ListCreateAPIView):
     queryset = Case.objects.all()
     serializer_class = CaseSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def pre_save(self, obj):
         obj.user = self.request.user
@@ -145,7 +145,7 @@ class CaseAPIList(generics.ListCreateAPIView):
 class CaseAPIDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Case.objects.all()
     serializer_class = CaseSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def pre_save(self, obj):
         obj.user = self.request.user
