@@ -39,7 +39,7 @@
                 {% endif %}
             </td>
             <td>
-                <a href="{% url 'simple_bugs:case_detail' case.id %}">{{ case.title }}</a>
+                <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
             </td>
         </tr>
         {% endfor %}

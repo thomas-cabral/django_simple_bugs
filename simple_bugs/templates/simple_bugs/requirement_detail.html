@@ -19,8 +19,8 @@
 </div>
 <div class="row">
 <div class="col-sm-4">
-    <a class="btn btn-primary" href="{% url 'simple_bugs:requirement_cases' requirement.id  %}">Related Cases <span class="badge">{{ requirement.case_set.count }}</span> </a>
-    <a class="btn btn-default" href="{% url 'simple_bugs:requirement_update' requirement.id %}">Update</a>
+    <a class="btn btn-primary" href="{% url 'simple_bugs:requirement_cases' requirement.id requirement.slug  %}">Related Cases <span class="badge">{{ requirement.case_set.count }}</span> </a>
+    <a class="btn btn-default" href="{% url 'simple_bugs:requirement_update' requirement.id requirement.slug %}">Update</a>
 </div>
 </div>
 

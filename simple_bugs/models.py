@@ -28,7 +28,7 @@ class Requirement(models.Model):
         super(Requirement, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return '/requirement/%i/' % self.id
+        return '/requirement/%i/%s' % (self.id, self.slug)
 
 
 class Case(models.Model):
@@ -63,4 +63,4 @@ class Case(models.Model):
         super(Case, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return '/cases/%i/' % self.id
+        return '/cases/%i/%s' % (self.id, self.slug)

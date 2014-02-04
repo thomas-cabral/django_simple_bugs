@@ -12,7 +12,7 @@
 </div>
 <div class="row">
     <div class="col-lg-4">
-        <a class="btn btn-default" href="{% url 'simple_bugs:case_update' case.id %}">Update</a>
+        <a class="btn btn-default" href="{% url 'simple_bugs:case_update' case.id case.slug %}">Update</a>
     </div>
 </div>
 <div class="row">
@@ -34,7 +34,7 @@
     <tr>
       <td colspan="2">
         <input class="btn btn-primary" type="submit" name="submit" value="Post">
-        <input type="hidden" name="next" value="{% url 'simple_bugs:case_detail' case.id %}" />
+        <input type="hidden" name="next" value="{% url 'simple_bugs:case_detail' case.id case.slug %}" />
       </td>
     </tr>
 </table>

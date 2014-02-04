@@ -33,11 +33,11 @@
     {% endif %}
 </td>
 <td>
-    <a href="{% url 'simple_bugs:case_detail' case.id %}">{{ case.title }}</a>
+    <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
 </td>
 <td>
     {% if case.requirement %}
-    <a href="{% url 'simple_bugs:requirement_detail' case.requirement.id %}">{{ case.requirement.title }}</a>
+    <a href="{% url 'simple_bugs:requirement_detail' case.requirement.id case.requirement.slug %}">{{ case.requirement.title }}</a>
     {% else %}
     None
     {% endif %}
@@ -66,7 +66,5 @@
                 {% endif %}
             </span>
         </div>
-{% else %}
-<h1>No Cases</h1><a href="{% url 'simple_bugs:case_create' %}"
 {% endif %}
 {% endblock %}
