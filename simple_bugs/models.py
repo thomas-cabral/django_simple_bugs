@@ -27,8 +27,9 @@ class Requirement(models.Model):
             self.slug = slugify(self.title)
         super(Requirement, self).save(*args, **kwargs)
 
+    @models.permalink
     def get_absolute_url(self):
-        return '/requirement/%i/%s' % (self.id, self.slug)
+        return 'simple_bugs:requirement_detail', (), {'pk': self.pk, 'slug': self.slug}
 
 
 class Case(models.Model):
@@ -62,5 +63,6 @@ class Case(models.Model):
             self.slug = slugify(self.title)
         super(Case, self).save(*args, **kwargs)
 
+    @models.permalink
     def get_absolute_url(self):
-        return '/cases/%i/%s' % (self.id, self.slug)
+        return 'simple_bugs:case_detail', (), {'pk': self.pk, 'slug': self.slug}
