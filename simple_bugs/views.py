@@ -115,6 +115,9 @@ class Profile(RequireLogin, generic.TemplateView):
         return context
 
 
+class SoCool(generic.TemplateView):
+    template_name = 'simple_bugs/socool.html'
+
 # APIs
 
 from rest_framework import generics
@@ -150,3 +153,14 @@ class CaseAPIDetail(generics.RetrieveUpdateDestroyAPIView):
     def pre_save(self, obj):
         obj.user = self.request.user
 
+
+class List(generic.TemplateView):
+    template_name = 'simple_bugs/list.html'
+
+
+class Detail(generic.TemplateView):
+    template_name = 'simple_bugs/detail.html'
+
+
+class New(generic.TemplateView):
+    template_name = 'simple_bugs/new.html'

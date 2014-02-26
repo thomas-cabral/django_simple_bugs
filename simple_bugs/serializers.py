@@ -7,13 +7,14 @@ from .models import Case
 class CaseSerializer(serializers.Serializer):
     class Meta:
         model = Case
-        fields = ('pk', 'type', 'title', 'detail', 'closed', 'user')
+        fields = ('pk', 'type', 'title', 'detail', 'closed', 'slug', 'user')
 
     pk = serializers.Field()
     type = serializers.ChoiceField(choices=Case.type_choice)
     title = serializers.CharField(max_length=55)
     detail = serializers.CharField(widget=widgets.Textarea, max_length=100000)
     closed = serializers.BooleanField(required=False)
+    slug = serializers.SlugField(required=False)
     user = serializers.Field(source='user.username')
 
     def restore_object(self, attrs, instance=None):
@@ -27,6 +28,7 @@ class CaseSerializer(serializers.Serializer):
 
 
 from django.contrib.auth.models import User
+
 
 class UserSerializer(serializers.ModelSerializer):
     cases = serializers.PrimaryKeyRelatedField(many=True)

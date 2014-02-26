@@ -31,7 +31,6 @@ UPLOADCARE_PUBLIC_KEY = 'f845862f0b29c458bde3';
     <li><a href="{% url 'simple_bugs:index' %}">Home</a> </li>
     <li><a href="{% url 'simple_bugs:requirement_list' %}">Requirements</a> </li>
     <li><a href="{% url 'simple_bugs:case_list' %}">Cases</a> </li>
-    <li><a href="/search/">Search</a> </li>
 {% if user.is_authenticated %}
     <li><a href="{% url 'simple_bugs:profile' user.username %}">Profile</a> </li>
 {% endif %}

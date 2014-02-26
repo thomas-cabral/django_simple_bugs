@@ -5,7 +5,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 
 urlpatterns = patterns('',
-    url(r'^$', views.Index.as_view(), name='index'),
+    url(r'^$', views.SoCool.as_view(), name='index'),
     url(r'^cases/$', views.CaseList.as_view(), name='case_list'),
     url(r'^cases/(?P<pk>\d+)/(?P<slug>[0-9A-Za-z-_.//]+)/update/$', views.CaseUpdate.as_view(), name='case_update'),
     url(r'^cases/(?P<pk>\d+)/(?P<slug>[0-9A-Za-z-_.//]+)/$', views.CaseDetail.as_view(), name='case_detail',),
@@ -20,6 +20,10 @@ urlpatterns = patterns('',
     url(r'^api/cases/(?P<pk>[0-9]+)/$', views.CaseAPIDetail.as_view()),
     url(r'^api/users/$', views.UserList.as_view()),
     url(r'^api/users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
-    )
+    url(r'^socool/$', views.SoCool.as_view(), name='socool'),
+    url(r'^socool/pages/list/$', views.List.as_view()),
+    url(r'^socool/pages/detail/$', views.Detail.as_view()),
+    url(r'^socool/pages/new/$', views.New.as_view()),
+)
 
 urlpatterns = format_suffix_patterns(urlpatterns)
