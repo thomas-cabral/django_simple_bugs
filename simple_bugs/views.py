@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import Case, Requirement
-import forms
+from . import forms
 
 
 class RequireLogin(object):
@@ -23,7 +23,7 @@ class SaveUser(RequireLogin):
         return super(SaveUser, self).form_valid(form)
 
 
-class Index(generic.TemplateView):
+class Index(RequireLogin, generic.TemplateView):
     template_name = 'simple_bugs/index.html'
 
     def get_context_data(self, **kwargs):
@@ -34,14 +34,14 @@ class Index(generic.TemplateView):
         return context
 
 
-class CaseList(generic.ListView):
+class CaseList(RequireLogin, generic.ListView):
     model = Case
     template_name = 'simple_bugs/case_list.html'
     context_object_name = 'case'
     paginate_by = 10
 
 
-class CaseDetail(generic.DetailView):
+class CaseDetail(RequireLogin, generic.DetailView):
     model = Case
     template_name = 'simple_bugs/case_detail.html'
     context_object_name = 'case'
@@ -64,11 +64,11 @@ class CaseUpdate(RequireLogin, generic.UpdateView):
     template_name = 'simple_bugs/case_update.html'
 
 
-class CaseDelete(generic.DeleteView):
+class CaseDelete(RequireLogin, generic.DeleteView):
     model = Case
 
 
-class RequirementList(generic.ListView):
+class RequirementList(RequireLogin, generic.ListView):
     model = Requirement
     template_name = 'simple_bugs/requirement_list.html'
     context_object_name = 'requirement'
@@ -100,7 +100,7 @@ class RequirementUpdate(RequireLogin, generic.UpdateView):
     form_class = forms.RequirementForm
 
 
-class RequirementDelete(generic.DeleteView):
+class RequirementDelete(RequireLogin, generic.DeleteView):
     model = Requirement
 
 
@@ -109,13 +109,13 @@ class Profile(RequireLogin, generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Profile, self).get_context_data(**kwargs)
-        context['user_case'] = Case.objects.filter(user=self.request.user, closed=False)
-        context['user_requirement'] = Requirement.objects.filter(user=self.request.user)
-        context['assigned_case'] = Case.objects.filter(assigned_to=self.request.user)
+        context['user_case'] = Case.objects.filter(user=self.kwargs['pk'], closed=False)
+        context['user_requirement'] = Requirement.objects.filter(user=self.kwargs['pk'])
+        context['assigned_case'] = Case.objects.filter(assigned_to=self.kwargs['pk'])
         return context
 
 
-class SoCool(generic.TemplateView):
+class SoCool(RequireLogin, generic.TemplateView):
     template_name = 'simple_bugs/socool.html'
 
 # APIs
@@ -129,11 +129,13 @@ from django.contrib.auth.models import User
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class CaseAPIList(generics.ListCreateAPIView):
@@ -154,13 +156,13 @@ class CaseAPIDetail(generics.RetrieveUpdateDestroyAPIView):
         obj.user = self.request.user
 
 
-class List(generic.TemplateView):
+class List(RequireLogin, generic.TemplateView):
     template_name = 'simple_bugs/list.html'
 
 
-class Detail(generic.TemplateView):
+class Detail(RequireLogin, generic.TemplateView):
     template_name = 'simple_bugs/detail.html'
 
 
-class New(generic.TemplateView):
+class New(RequireLogin, generic.TemplateView):
     template_name = 'simple_bugs/new.html'

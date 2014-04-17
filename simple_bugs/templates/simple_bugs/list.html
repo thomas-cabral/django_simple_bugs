@@ -1,0 +1,52 @@
+<style type="text/css">
+.case-animate.ng-enter,
+.case-animate.ng-leave
+{
+    -webkit-transition: 400ms cubic-bezier(0.250, 0.100, 0.250, 1.000) all;
+    -moz-transition: 400ms cubic-bezier(0.250, 0.100, 0.250, 1.000) all;
+    -ms-transition: 400ms cubic-bezier(0.250, 0.100, 0.250, 1.000) all;
+    -o-transition: 400ms cubic-bezier(0.250, 0.100, 0.250, 1.000) all;
+    transition: 400ms cubic-bezier(0.250, 0.100, 0.250, 1.000) all;
+    position: relative;
+    display: block;
+}
+
+.case-animate.ng-enter.case-animate.ng-enter-active,
+.case-animate.ng-leave {
+    opacity: 1;
+    right: 0;
+    height: 30px;
+}
+
+.case-animate.ng-leave.case-animate.ng-leave-active,
+.case-animate.ng-enter {
+    opacity: 0;
+    right: -50px;
+    height: 0px;
+}
+</style>
+  {% verbatim %}
+<!-- Initialize a new AngularJS app and associate it with a module named "instantSearch"-->
+<div class="row">
+<div class="col-lg-offset-4 col-lg-4">
+<input class="form-control" ng-model="search" placeholder="Search"> <br />
+</div>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Case Title <a href="#/new"><i class="fa fa-plus-circle pull-right"></i></a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="case in cases.results | filter:search" class="case-animate">
+        <td>
+            <a href="#detail/{{ case.pk }}"> {{ case.title }}</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endverbatim %}
+

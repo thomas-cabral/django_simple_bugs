@@ -7,14 +7,25 @@
 </div>
 <div class="row">
 <div class="col-sm-12">
+    <div class="well well-lg">
     {{ requirement.detail|safe }}
+    </div>
 </div>
 </div>
 <div class="row">
-<div class="col-lg-12">
+<div class="col-lg-offset-4 col-lg-4">
+{% if requirement.working_on %}
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Users working on Requirement</h3>
+  </div>
+  <div class="panel-body">
     {% for user in requirement.working_on.all %}
-        {{ user.username }}
+        <a href="{% url 'simple_bugs:profile' user.pk user.username %}"> {{ user.username }}</a>
     {% endfor %}
+  </div>
+</div>
+{% endif %}
 </div>
 </div>
 <div class="row">

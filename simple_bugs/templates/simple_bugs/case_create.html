@@ -17,6 +17,8 @@
     </div>
 </div>
 <div class="col-lg-4">
+{% if case %}
+<h3 class="text-center">Recent Cases</h3>
     <table class="table">
         <thead>
         <tr>
@@ -24,7 +26,10 @@
                 Type
             </th>
             <th>
-                Recent Bugs
+                ID
+            </th>
+            <th>
+                Title
             </th>
         </tr>
         </thead>
@@ -39,12 +44,19 @@
                 {% endif %}
             </td>
             <td>
+                {{ case.id }}
+            </td>
+            <td>
                 <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
             </td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
+{% else %}
+    <h3>No Recent Cases</h3>
+{% endif %}
+
 </div>
 </div>
 {% wysiwyg_editor 'id_detail' %}

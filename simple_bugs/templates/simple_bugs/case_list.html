@@ -8,6 +8,9 @@
         Type
     </th>
     <th>
+        ID
+    </th>
+    <th>
         Title
     </th>
     <th>
@@ -31,6 +34,9 @@
     {% elif case.type == 'FEATURE_REQUEST' %}
     <i class="fa fa-lightbulb-o fa-lg fa-fw"></i>
     {% endif %}
+</td>
+<td>
+    {{ case.id }}
 </td>
 <td>
     <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
