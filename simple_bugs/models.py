@@ -1,9 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from django.utils.encoding import python_2_unicode_compatible
 # Create your models here.
 
 
+@python_2_unicode_compatible
 class Requirement(models.Model):
     #data fields
     title = models.CharField(max_length=55)
@@ -13,13 +15,13 @@ class Requirement(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     # relationships
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='user')
     working_on = models.ManyToManyField(User, related_name='working_on', null=True, blank=True)
 
     class Meta:
         ordering = ['-created_on']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
@@ -32,6 +34,7 @@ class Requirement(models.Model):
         return 'simple_bugs:requirement_detail', (), {'pk': self.pk, 'slug': self.slug}
 
 
+@python_2_unicode_compatible
 class Case(models.Model):
     type_choice = (
         ('BUG', 'Bug'),
@@ -48,14 +51,15 @@ class Case(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     #relationships
-    user = models.ForeignKey(User, related_name='cases')
+    user = models.ForeignKey(User, related_name='created_by')
     assigned_to = models.ForeignKey(User, related_name='assigned', null=True, blank=True)
-    requirement = models.ForeignKey(Requirement, null=True, blank=True, verbose_name='Related Requirement')
+    requirement = models.ForeignKey(Requirement, related_name='requirement', null=True, blank=True,
+                                    verbose_name='Related Requirement')
 
     class Meta:
         ordering = ['-created_on']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):

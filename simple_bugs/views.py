@@ -109,9 +109,9 @@ class Profile(RequireLogin, generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Profile, self).get_context_data(**kwargs)
-        context['user_case'] = Case.objects.filter(user=self.kwargs['pk'], closed=False)
-        context['user_requirement'] = Requirement.objects.filter(user=self.kwargs['pk'])
-        context['assigned_case'] = Case.objects.filter(assigned_to=self.kwargs['pk'])
+        context['user_case'] = Case.objects.filter(user__username=self.kwargs['username'])
+        context['user_requirement'] = Requirement.objects.filter(working_on__username=self.kwargs['username'])
+        context['assigned_case'] = Case.objects.filter(assigned_to__username=self.kwargs['username'])
         return context
 
 
@@ -122,19 +122,19 @@ class SoCool(RequireLogin, generic.TemplateView):
 
 from rest_framework import generics
 from rest_framework import permissions
-from .serializers import CaseSerializer, UserSerializer
+from .serializers import CaseSerializer, UserSerializer, RequirementSerializer
 from django.contrib.auth.models import User
 
 
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class RequirementsApiList(generics.ListAPIView):
+    queryset = Requirement.objects.all()
+    serializer_class = RequirementSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
 
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class RequirementsAPIDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Requirement.objects.all()
+    serializer_class = RequirementSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
 
@@ -166,3 +166,15 @@ class Detail(RequireLogin, generic.TemplateView):
 
 class New(RequireLogin, generic.TemplateView):
     template_name = 'simple_bugs/new.html'
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated,)

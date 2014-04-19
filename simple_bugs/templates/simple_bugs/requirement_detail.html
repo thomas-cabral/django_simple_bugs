@@ -21,7 +21,7 @@
   </div>
   <div class="panel-body">
     {% for user in requirement.working_on.all %}
-        <a href="{% url 'simple_bugs:profile' user.pk user.username %}"> {{ user.username }}</a>
+        <a href="{% url 'simple_bugs:profile' user.username %}"><span class="label label-primary"> {{ user.username }}</span></a>
     {% endfor %}
   </div>
 </div>

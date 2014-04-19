@@ -1,6 +1,6 @@
 {% extends 'simple_bugs/base.html' %}
 {% block content %}
-    <h1 class="page-header">{{ user.username|capfirst }}'s <small>Profile Page</small></h1>
+    <h1 class="page-header">{{ username|capfirst }}'s <small>Profile Page</small></h1>
 <div class="row">
 <div class="col-lg-4">
     <table class="table">
@@ -41,7 +41,9 @@
         {% empty %}
             </tbody>
             </table>
+        {% if user.username == username %}
         <a class="btn btn-primary" href="{% url 'simple_bugs:case_create' %}">Create One</a>
+        {% endif %}
     {% endfor %}
     </tbody>
     </table>
@@ -65,7 +67,9 @@
         {% empty %}
             </tbody>
             </table>
+        {% if user.username == username %}
         <a class="btn btn-primary" href="{% url 'simple_bugs:requirement_create' %}">Create One</a>
+        {% endif %}
     {% endfor %}
     </tbody>
     </table>
