@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.utils.encoding import python_2_unicode_compatible
+from simple_history.models import HistoricalRecords
 # Create your models here.
 
 
@@ -16,10 +17,21 @@ class Requirement(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     # relationships
     user = models.ForeignKey(User, related_name='user')
+    changed_by = models.ForeignKey(User, related_name='requirement_changed_by', null=True, blank=True)
     working_on = models.ManyToManyField(User, related_name='working_on', null=True, blank=True)
+    #history
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ['-created_on']
+
+    @property
+    def _history_user(self):
+        return self.changed_by
+
+    @_history_user.setter
+    def _history_user(self, value):
+        self.changed_by = value
 
     def __str__(self):
         return self.title
@@ -52,12 +64,23 @@ class Case(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     #relationships
     user = models.ForeignKey(User, related_name='created_by')
+    changed_by = models.ForeignKey(User, related_name='case_changed_by', null=True, blank=True)
     assigned_to = models.ForeignKey(User, related_name='assigned', null=True, blank=True)
     requirement = models.ForeignKey(Requirement, related_name='requirement', null=True, blank=True,
                                     verbose_name='Related Requirement')
+    #history
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ['-created_on']
+
+    @property
+    def _history_user(self):
+        return self.changed_by
+
+    @_history_user.setter
+    def _history_user(self, value):
+        self.changed_by = value
 
     def __str__(self):
         return self.title

@@ -29,6 +29,9 @@
             <th>
                 Created Case{{ user_case|pluralize }}
             </th>
+            <th>
+                Status
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +39,13 @@
         <tr>
             <td>
                 <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
+            </td>
+            <td>
+                {% if case.closed == True %}
+                    Closed
+                {% else %}
+                    Open
+                {% endif %}
             </td>
         </tr>
         {% empty %}

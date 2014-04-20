@@ -15,12 +15,25 @@ class RequireLogin(object):
 
 
 class SaveUser(RequireLogin):
+    """
+    Mixin for new forms
+    """
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.save(commit=True)
-        #messages.success(self.request, 'Thanks for Uploading!')
         return super(SaveUser, self).form_valid(form)
+
+
+class TrackUser(RequireLogin):
+    """
+    Mixin for tracking user on change
+    """
+
+    def form_valid(self, form):
+        form.instance.changed_by = self.request.user
+        form.save(commit=True)
+        return super(TrackUser, self).form_valid(form)
 
 
 class Index(RequireLogin, generic.TemplateView):
@@ -37,8 +50,12 @@ class Index(RequireLogin, generic.TemplateView):
 class CaseList(RequireLogin, generic.ListView):
     model = Case
     template_name = 'simple_bugs/case_list.html'
-    context_object_name = 'case'
+
     paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(CaseList, self).get_context_data(**kwargs)
+        context['case'] = Case.objects.filter(closed=False)
 
 
 class CaseDetail(RequireLogin, generic.DetailView):
@@ -58,7 +75,7 @@ class CaseCreate(SaveUser, generic.CreateView):
         return context
 
 
-class CaseUpdate(RequireLogin, generic.UpdateView):
+class CaseUpdate(TrackUser, generic.UpdateView):
     model = Case
     form_class = forms.CaseForm
     template_name = 'simple_bugs/case_update.html'
@@ -94,7 +111,7 @@ class RequirementCreate(SaveUser, generic.CreateView):
         return context
 
 
-class RequirementUpdate(RequireLogin, generic.UpdateView):
+class RequirementUpdate(TrackUser, generic.UpdateView):
     model = Requirement
     template_name = 'simple_bugs/requirement_update.html'
     form_class = forms.RequirementForm
