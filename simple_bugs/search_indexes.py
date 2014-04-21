@@ -5,6 +5,7 @@ from .models import Case
 
 
 class CaseIndex(indexes.SearchIndex, indexes.Indexable):
+    id = indexes.IntegerField(model_attr='pk')
     text = indexes.CharField(document=True, use_template=True)
     author = indexes.CharField(model_attr='user')
     created_on = indexes.DateTimeField(model_attr='created_on')

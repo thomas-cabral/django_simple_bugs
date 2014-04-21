@@ -39,6 +39,9 @@
                     Type
                 </th>
                 <th>
+                    ID
+                </th>
+                <th>
                     Title
                 </th>
                 <th>
@@ -61,6 +64,9 @@
                         {% elif result.object.type == 'FEATURE_REQUEST' %}
                         <i class="fa fa-lightbulb-o fa-lg fa-fw"></i>
                         {% endif %}
+                    </td>
+                    <td>
+                        {{ result.object.id }}
                     </td>
                     <td>
                         <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>

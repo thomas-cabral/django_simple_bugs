@@ -1,4 +1,8 @@
 {% extends 'simple_bugs/base.html' %}
+{% block extrahead %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'simple_bugs/css/sidebar.css' %}">
+{% endblock %}
 {% block outside_container %}
 <a id="history-toggle" href="#" class="btn btn-info btn-sm"><span class="fa fa-clock-o fa-lg fa-fw"></span></a>
 <div id="sidebar-wrapper">
@@ -45,117 +49,6 @@
 </div>
 {% endblock %}
 {% block content %}
-<style type="text/css">
-#sidebar-wrapper {
-  margin-right: -300px;
-  margin-top: 50px;
-  right: 0;
-  width: 300px;
-  background: #000;
-  opacity: 0.8;
-  position: fixed;
-  height: 100%;
-  overflow-y: auto;
-  z-index: 1000;
-  -webkit-transition: all 0.4s ease 0s;
-  -moz-transition: all 0.4s ease 0s;
-  -ms-transition: all 0.4s ease 0s;
-  -o-transition: all 0.4s ease 0s;
-  transition: all 0.4s ease 0s;
-}
-
-#sidebar-wrapper.active {
-  right: 300px;
-  width: 300px;
-  -webkit-transition: all 0.4s ease 0s;
-  -moz-transition: all 0.4s ease 0s;
-  -ms-transition: all 0.4s ease 0s;
-  -o-transition: all 0.4s ease 0s;
-  transition: all 0.4s ease 0s;
-}
-
-#sidebar-mail-wrapper {
-  margin-right: -300px;
-  margin-top: 50px;
-  right: 0;
-  width: 300px;
-  background: #000;
-  opacity: 0.8;
-  position: fixed;
-  height: 100%;
-  overflow-y: auto;
-  z-index: 1000;
-  -webkit-transition: all 0.4s ease 0s;
-  -moz-transition: all 0.4s ease 0s;
-  -ms-transition: all 0.4s ease 0s;
-  -o-transition: all 0.4s ease 0s;
-  transition: all 0.4s ease 0s;
-}
-
-#sidebar-mail-wrapper.active {
-  right: 300px;
-  width: 300px;
-  -webkit-transition: all 0.4s ease 0s;
-  -moz-transition: all 0.4s ease 0s;
-  -ms-transition: all 0.4s ease 0s;
-  -o-transition: all 0.4s ease 0s;
-  transition: all 0.4s ease 0s;
-}
-
-#history-toggle {
-  top: 50px;
-  right: 0;
-  position: fixed;
-  z-index: 1;
-  -webkit-transition: all 0.4s ease 0s;
-  -moz-transition: all 0.4s ease 0s;
-  -ms-transition: all 0.4s ease 0s;
-  -o-transition: all 0.4s ease 0s;
-  transition: all 0.4s ease 0s;
-}
-
-#history-toggle.active {
-  right: 300px;
-  -webkit-transition: all 0.4s ease 0s;
-  -moz-transition: all 0.4s ease 0s;
-  -ms-transition: all 0.4s ease 0s;
-  -o-transition: all 0.4s ease 0s;
-  transition: all 0.4s ease 0s;
-
-}
-
-#mail-toggle {
-  top: 90px;
-  right: 0;
-  position: fixed;
-  z-index: 1;
-  -webkit-transition: all 0.4s ease 0s;
-  -moz-transition: all 0.4s ease 0s;
-  -ms-transition: all 0.4s ease 0s;
-  -o-transition: all 0.4s ease 0s;
-  transition: all 0.4s ease 0s;
-}
-
-#mail-toggle.active {
-  right: 300px;
-  top: 50px;
-  -webkit-transition: all 0.4s ease 0s;
-  -moz-transition: all 0.4s ease 0s;
-  -ms-transition: all 0.4s ease 0s;
-  -o-transition: all 0.4s ease 0s;
-  transition: all 0.4s ease 0s;
-
-}
-
-#change_log_title {
-  text-align: center;
-  color: white;
-}
-
-.toggle {
-  margin: 5px 5px 0 0;
-}
-</style>
 <div class="row">
 <div class="col-sm-12">
     <h1 class="page-header">{{ requirement.title|capfirst }}</h1>

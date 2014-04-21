@@ -33,17 +33,17 @@ class Requirement(models.Model):
     def _history_user(self, value):
         self.changed_by = value
 
-    def __str__(self):
-        return self.title
+    @models.permalink
+    def get_absolute_url(self):
+        return 'simple_bugs:requirement_detail', (), {'pk': self.pk, 'slug': self.slug}
 
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = slugify(self.title)
         super(Requirement, self).save(*args, **kwargs)
 
-    @models.permalink
-    def get_absolute_url(self):
-        return 'simple_bugs:requirement_detail', (), {'pk': self.pk, 'slug': self.slug}
+    def __str__(self):
+        return self.title
 
 
 @python_2_unicode_compatible
@@ -82,14 +82,14 @@ class Case(models.Model):
     def _history_user(self, value):
         self.changed_by = value
 
-    def __str__(self):
-        return self.title
+    @models.permalink
+    def get_absolute_url(self):
+        return 'simple_bugs:case_detail', (), {'pk': self.pk, 'slug': self.slug}
 
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = slugify(self.title)
         super(Case, self).save(*args, **kwargs)
 
-    @models.permalink
-    def get_absolute_url(self):
-        return 'simple_bugs:case_detail', (), {'pk': self.pk, 'slug': self.slug}
+    def __str__(self):
+        return self.title
