@@ -7,7 +7,7 @@
 {% block js %}
 
     <script type="text/javascript">
-	var scotchApp = angular.module('scotchApp', ['ngRoute', 'ngAnimate']);
+	var scotchApp = angular.module('scotchApp', ['ngRoute', 'ngAnimate', 'ngSanitize']);
 
 	// configure our routes
 	scotchApp.config(function($routeProvider, $locationProvider) {

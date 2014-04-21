@@ -1,6 +1,8 @@
 {% verbatim %}
 <div class="caseDetail">
 <h1 class="page-header">{{ case_detail.title }}</h1>
-    <div class=""
+    <div class="well well-lg">
+        <div ng-bind-html="case_detail.detail"></div>
+    </div>
 </div>
 {% endverbatim %}

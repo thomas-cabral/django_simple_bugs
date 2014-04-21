@@ -48,14 +48,10 @@ class Index(RequireLogin, generic.TemplateView):
 
 
 class CaseList(RequireLogin, generic.ListView):
-    model = Case
+    queryset = Case.objects.filter(closed=False)
     template_name = 'simple_bugs/case_list.html'
-
     paginate_by = 10
-
-    def get_context_data(self, **kwargs):
-        context = super(CaseList, self).get_context_data(**kwargs)
-        context['case'] = Case.objects.filter(closed=False)
+    context_object_name = 'case'
 
 
 class CaseDetail(RequireLogin, generic.DetailView):
