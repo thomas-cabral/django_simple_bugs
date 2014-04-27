@@ -45,7 +45,7 @@
                     Title
                 </th>
                 <th>
-                    Relation
+                    Requirement
                 </th>
                 <th>
                     Date Created
@@ -73,7 +73,7 @@
                     </td>
                     <td>
                     {% if result.object.requirement %}
-                        <a href="{% url 'simple_bugs:requirement_detail' result.object.requirement.id %}">{{ result.object.requirement.title }}</a>
+                        <a href="{% url 'simple_bugs:requirement_detail' result.object.requirement.id result.object.requirement.slug %}">{{ result.object.requirement.title }}</a>
                     {% else %}
                         None
                     {% endif %}

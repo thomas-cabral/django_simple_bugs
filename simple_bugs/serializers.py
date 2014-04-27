@@ -7,7 +7,7 @@ from .models import Case, Requirement
 class CaseSerializer(serializers.Serializer):
     class Meta:
         model = Case
-        fields = ('pk', 'type', 'title', 'detail', 'closed', 'slug', 'user')
+        fields = ('pk', 'type', 'title', 'detail', 'closed', 'slug', 'created_on', 'user')
 
     pk = serializers.Field()
     type = serializers.ChoiceField(choices=Case.type_choice)
@@ -15,6 +15,7 @@ class CaseSerializer(serializers.Serializer):
     detail = serializers.CharField(widget=widgets.Textarea, max_length=100000)
     closed = serializers.BooleanField(required=False)
     slug = serializers.SlugField(required=False)
+    created_on = serializers.DateTimeField()
     user = serializers.Field(source='user.username')
 
     def restore_object(self, attrs, instance=None):

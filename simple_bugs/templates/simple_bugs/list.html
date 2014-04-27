@@ -1,12 +1,11 @@
 <style type="text/css">
-.case-animate.ng-enter {
-    -webkit-transform: rotateX(-180deg) translatez(30px);
-    -moz-transform: rotateX(-180deg) translatez(30px);
-    -ms-transform: rotateX(-180deg) translatez(30px);
-    -o-transform: rotateX(-180deg) translatez(30px);
-    transform: rotateX(-180deg) translatez(30px);
-    opacity: 0;
-    height: 0px;
+.case-animate.ng-enter, .case-animate.ng-leave {
+    -webkit-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
 }
 .case-animate.ng-leave
 {
@@ -16,31 +15,29 @@
     -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
     transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
     position: relative;
-    display: block;
 }
 
 .case-animate.ng-enter.case-animate.ng-enter-active,
 .case-animate.ng-leave {
     opacity: 1;
-    right: 0;
     height: 30px;
 }
 
 .case-animate.ng-leave.case-animate.ng-leave-active,
 .case-animate.ng-enter {
     opacity: 0;
-    right: -50px;
     height: 0px;
 }
 </style>
-  {% verbatim %}
+{% verbatim %}
 <!-- Initialize a new AngularJS app and associate it with a module named "instantSearch"-->
 <div class="row">
 <div class="col-lg-offset-4 col-lg-4">
 <input class="form-control" ng-model="search" placeholder="Search"> <br />
 </div>
 </div>
-<table class="table">
+<div class="table-responsive">
+<table class="table table-striped" style="table-layout:fixed;">
     <thead>
     <tr>
         <th>
@@ -48,6 +45,9 @@
         </th>
         <th>
             Case Title <a href="#/new"><i class="fa fa-plus-circle pull-right"></i></a>
+        </th>
+        <th>
+            Created On
         </th>
     </tr>
     </thead>
@@ -57,10 +57,14 @@
             {{ case.pk }}
         </td>
         <td>
-            <a href="#detail/{{ case.pk }}"> {{ case.title }}</a>
+            <a href="#/detail/{{ case.pk }}"> {{ case.title }}</a>
+        </td>
+        <td>
+            {{ case.created_on| date : 'medium' }}
         </td>
     </tr>
     </tbody>
 </table>
+</div>
 {% endverbatim %}
 

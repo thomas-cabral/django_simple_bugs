@@ -1,6 +1,7 @@
 # Create your views here.
 from django.views import generic
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 
 from .models import Case, Requirement
@@ -42,8 +43,8 @@ class Index(RequireLogin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
         context['case_count'] = Case.objects.count()
-        context['recent_bugs'] = Case.objects.filter(type='BUG', closed=False).order_by('-created_on')[:5]
-        context['recent_features'] = Case.objects.filter(type='FEATURE_REQUEST', closed=False).order_by('-created_on')[:5]
+        context['recent_bugs'] = Case.objects.filter(type='BUG', closed=False).order_by('-created_on')[:10]
+        context['recent_features'] = Case.objects.filter(type='FEATURE_REQUEST', closed=False).order_by('-created_on')[:10]
         return context
 
 
@@ -152,7 +153,7 @@ class RequirementsAPIDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class CaseAPIList(generics.ListCreateAPIView):
-    queryset = Case.objects.all()
+    queryset = Case.objects.filter(closed=False)
     serializer_class = CaseSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -169,18 +170,6 @@ class CaseAPIDetail(generics.RetrieveUpdateDestroyAPIView):
         obj.user = self.request.user
 
 
-class List(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/list.html'
-
-
-class Detail(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/detail.html'
-
-
-class New(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/new.html'
-
-
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -191,3 +180,15 @@ class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+
+class List(RequireLogin, generic.TemplateView):
+    template_name = 'simple_bugs/list.html'
+
+
+class Detail(RequireLogin, generic.TemplateView):
+    template_name = 'simple_bugs/detail.html'
+
+
+class New(RequireLogin, generic.TemplateView):
+    template_name = 'simple_bugs/new.html'
