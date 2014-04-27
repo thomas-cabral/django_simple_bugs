@@ -31,6 +31,9 @@
             <th>
                 Title
             </th>
+            <th>
+                Status
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -48,6 +51,13 @@
             </td>
             <td>
                 <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
+            </td>
+            <td>
+                {% if case.closed == False %}
+                Open
+                {% elif case.closed == True%}
+                Closed
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
