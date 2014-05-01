@@ -1,7 +1,6 @@
 # Create your views here.
 from django.views import generic
 from django.contrib.auth.decorators import login_required
-from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 
 from .models import Case, Requirement
@@ -136,7 +135,7 @@ class SoCool(RequireLogin, generic.TemplateView):
 
 from rest_framework import generics
 from rest_framework import permissions
-from .serializers import CaseSerializer, UserSerializer, RequirementSerializer
+from .simple_bugs.serializers import CaseSerializer, UserSerializer, RequirementSerializer
 from django.contrib.auth.models import User
 
 

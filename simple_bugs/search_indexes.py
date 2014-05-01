@@ -1,7 +1,9 @@
 __author__ = 'Thomas'
 import datetime
+
 from haystack import indexes
-from .models import Case
+
+from .simple_bugs.models import Case
 
 
 class CaseIndex(indexes.SearchIndex, indexes.Indexable):

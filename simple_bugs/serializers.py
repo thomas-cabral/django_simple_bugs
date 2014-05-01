@@ -1,7 +1,8 @@
 __author__ = 'Thomas'
 from rest_framework import serializers
 from django.forms import widgets
-from .models import Case, Requirement
+
+from .simple_bugs.models import Case, Requirement
 
 
 class CaseSerializer(serializers.Serializer):

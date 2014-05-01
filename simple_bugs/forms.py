@@ -1,7 +1,7 @@
 __author__ = 'Thomas'
 from django import forms
-from django.utils.translation import ugettext as _
-from .models import Case, Requirement
+
+from .simple_bugs.models import Case, Requirement
 
 
 class CaseForm(forms.ModelForm):
