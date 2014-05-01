@@ -12,7 +12,7 @@ except ImportError:
     from distutils.core import setup
 
 #version = simple_bugs.__version__
-version = '0.1.0'
+version = '0.1.1'
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -37,8 +37,15 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
+	'django>=1.5.1',
+	'south>=0.8.4',
+	'django_haystack>=2.1.0',
+	'django_crispy_forms>=1.4.0',
+	'django_wysiwyg>=0.5.1',
+	'django_simple_history>=1.3.0',
+	'djangorestframework>=2.3.12',
     ],
-    license="BSD",
+    license="MIT",
     zip_safe=False,
     keywords='django_simple_bugs',
     classifiers=[
