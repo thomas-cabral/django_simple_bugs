@@ -1,5 +1,9 @@
 django>=1.5.1
-
 wheel==0.22.0
-
 # Additional requirements go here
+south>=0.8.4
+django_haystack>=2.1.0
+django_crispy_forms>=1.4.0
+django_wysiwyg>=0.5.1
+django_simple_history>=1.3.0
+djangorestframework>=2.3.12
