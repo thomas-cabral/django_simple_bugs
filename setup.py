@@ -12,7 +12,7 @@ except ImportError:
     from distutils.core import setup
 
 #version = simple_bugs.__version__
-version = '0.1.1'
+version = '0.1.2'
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
