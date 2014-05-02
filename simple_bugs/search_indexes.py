@@ -3,7 +3,7 @@ import datetime
 
 from haystack import indexes
 
-from .simple_bugs.models import Case
+from .models import Case
 
 
 class CaseIndex(indexes.SearchIndex, indexes.Indexable):

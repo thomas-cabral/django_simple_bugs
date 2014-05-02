@@ -135,7 +135,7 @@ class SoCool(RequireLogin, generic.TemplateView):
 
 from rest_framework import generics
 from rest_framework import permissions
-from .simple_bugs.serializers import CaseSerializer, UserSerializer, RequirementSerializer
+from .serializers import CaseSerializer, UserSerializer, RequirementSerializer
 from django.contrib.auth.models import User
 
 
