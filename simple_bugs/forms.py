@@ -1,7 +1,6 @@
 __author__ = 'Thomas'
 from django import forms
-
-from .simple_bugs.models import Case, Requirement
+from .models import Case, Requirement
 
 
 class CaseForm(forms.ModelForm):
