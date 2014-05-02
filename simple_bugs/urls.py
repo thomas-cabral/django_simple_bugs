@@ -1,4 +1,4 @@
-import views
+from . import views
 
 __author__ = 'Thomas'
 from django.conf.urls import patterns, url
