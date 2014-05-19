@@ -9,7 +9,7 @@
     <div class="well">
     <form role="form" action="{% url 'simple_bugs:case_create' %}" method="post">{% csrf_token %}
         <fieldset>
-            <legend>Create A New Bug</legend>
+            <legend>Create A New Case</legend>
             {{ form|crispy }}
         </fieldset>
         <input class="btn btn-primary" type="submit">
