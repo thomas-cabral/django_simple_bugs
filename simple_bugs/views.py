@@ -3,7 +3,7 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from .models import Case, Requirement
+from .models import Case, Requirement, Estimate
 from . import forms
 
 
@@ -58,6 +58,11 @@ class CaseDetail(RequireLogin, generic.DetailView):
     model = Case
     template_name = 'simple_bugs/case_detail.html'
     context_object_name = 'case'
+
+    def get_context_data(self, **kwargs):
+        context = super(CaseDetail, self).get_context_data(**kwargs)
+        context['estimate_list'] = Estimate.objects.filter(case__id=self.kwargs['pk'])
+        return context
 
 
 class CaseCreate(SaveUser, generic.CreateView):

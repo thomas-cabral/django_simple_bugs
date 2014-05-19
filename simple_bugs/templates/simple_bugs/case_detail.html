@@ -1,6 +1,6 @@
 {% extends 'simple_bugs/base.html' %}
 {% block extrahead %}
-{% load staticfiles %}
+{% load staticfiles wysiwyg %}{% wysiwyg_setup %}
 <link rel="stylesheet" href="{% static 'simple_bugs/css/sidebar.css' %}">
 {% endblock %}
 {% block outside_container %}
@@ -66,10 +66,23 @@
     <div class="col-lg-4">
         <a class="btn btn-default" href="{% url 'simple_bugs:case_update' case.id case.slug %}">Update</a>
     </div>
+    <div class="col-lg-4">
+        {% for estimate in estimate_list %}
+            <h5>{{ estimate.get_type_display }} Estimate: {{ estimate.estimate_formatted }}</h5>
+            <div class="progress">
+                        {% if estimate.progress > 100 %}
+                            <div class="progress-bar progress-bar-danger" style="width:100%">{{ estimate.remaining_time }} overdue</div>
+                        {% else %}
+                            <div class="progress-bar progress-bar-info" style="width:{{ estimate.progress }}%">{{ estimate.remaining_time }} remaining</div>
+                        {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
 </div>
 <div class="row">
 <div class="col-lg-4">
-    <h2>Comments <i class="fa fa-comments"></i> </h2>
+    <h2>Discussions <i class="fa fa-comments"></i> </h2>
 </div>
 <div class="col-lg-12">
     {% load comments crispy_forms_filters %}
@@ -93,6 +106,7 @@
 </form>
 </div>
 </div>
+    {% wysiwyg_editor 'id_comment' %}
 {% endblock %}
 {% block js %}
     <script>
