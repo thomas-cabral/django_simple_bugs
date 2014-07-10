@@ -7,7 +7,7 @@
 <div class="row">
 <div class="col-lg-8">
     <div class="well">
-    <form role="form" action="{% url 'simple_bugs:case_create' %}" method="post">{% csrf_token %}
+    <form role="form" action="{% url 'simple_bugs_cases:case_create' %}" method="post">{% csrf_token %}
         <fieldset>
             <legend>Create A New Case</legend>
             {{ form|crispy }}
@@ -50,7 +50,7 @@
                 {{ case.id }}
             </td>
             <td>
-                <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
+                <a href="{% url 'simple_bugs_cases:case_detail' case.id case.slug %}">{{ case.title }}</a>
             </td>
             <td>
                 {% if case.closed == False %}

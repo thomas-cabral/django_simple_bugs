@@ -24,7 +24,7 @@
 {% for case in recent_bugs %}
 <tr>
     <td>
-        <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
+        <a href="{% url 'simple_bugs_cases:case_detail' case.id case.slug %}">{{ case.title }}</a>
     </td>
     <td>
         {{ case.created_on }}
@@ -51,7 +51,7 @@
 {% for case in recent_features %}
 <tr>
     <td>
-        <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
+        <a href="{% url 'simple_bugs_cases:case_detail' case.id case.slug %}">{{ case.title }}</a>
     </td>
     <td>
         {{ case.created_on }}

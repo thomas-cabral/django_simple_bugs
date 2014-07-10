@@ -29,7 +29,7 @@
     {% endif %}
     </td>
     <td>
-        <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}" title="{{ case.title }}">{{ case.title|truncatechars:15 }}</a>
+        <a href="{% url 'simple_bugs_cases:case_detail' case.id case.slug %}" title="{{ case.title }}">{{ case.title|truncatechars:15 }}</a>
     </td>
     <td>
         {{ case.created_on }}

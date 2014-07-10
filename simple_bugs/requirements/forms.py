@@ -1,14 +1,5 @@
-__author__ = 'Thomas'
 from django import forms
-from simple_bugs.cases.models import Case
-from simple_bugs.requirements.models import Requirement
-
-
-class CaseForm(forms.ModelForm):
-
-    class Meta:
-        model = Case
-        fields = ('project', 'type', 'title', 'detail', 'closed', 'assigned_to', 'requirement')
+from .models import Requirement
 
 
 class RequirementForm(forms.ModelForm):

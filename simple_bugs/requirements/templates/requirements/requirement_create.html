@@ -9,7 +9,7 @@
 <div class="row">
 <div class="col-lg-12">
     <div class="well">
-    <form role="form" action="{% url 'simple_bugs:requirement_create' %}" method="post">{% csrf_token %}
+    <form role="form" action="{% url 'simple_bugs_requirements:requirement_create' %}" method="post">{% csrf_token %}
         <fieldset>
             <legend>Create A New Requirement</legend>
             {{ form|crispy }}

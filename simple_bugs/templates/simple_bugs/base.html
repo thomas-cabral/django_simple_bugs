@@ -47,8 +47,8 @@ body {
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 <ul class="nav navbar-nav">
     <li><a href="{% url 'simple_bugs:index' %}">Home</a> </li>
-    <li><a href="{% url 'simple_bugs:requirement_list' %}">Requirements</a> </li>
-    <li><a href="{% url 'simple_bugs:case_list' %}">Cases</a> </li>
+    <li><a href="{% url 'simple_bugs_requirements:requirement_list' %}">Requirements</a> </li>
+    <li><a href="{% url 'simple_bugs_cases:case_list' %}">Cases</a> </li>
 {% if user.is_authenticated %}
     <li><a href="{% url 'simple_bugs:profile' user.username %}">Profile</a> </li>
     <li><a href="/accounts/logout">Logout</a></li>

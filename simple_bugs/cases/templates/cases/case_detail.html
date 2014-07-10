@@ -63,7 +63,7 @@
 </div>
     <div class="col-lg-4">
 
-        <a class="btn btn-sm btn-primary" href="{% url 'simple_bugs:case_update' case.id case.slug %}">Update</a>
+        <a class="btn btn-sm btn-primary" href="{% url 'simple_bugs_cases:case_update' case.id case.slug %}">Update</a>
         <a class="btn btn-sm btn-info" href="#">Add Estimate</a>
 
         {% for estimate in estimate_list %}
@@ -102,7 +102,7 @@
     <tr>
       <td colspan="2">
         <input class="btn btn-primary" type="submit" name="submit" value="Post">
-        <input type="hidden" name="next" value="{% url 'simple_bugs:case_detail' case.id case.slug %}" />
+        <input type="hidden" name="next" value="{% url 'simple_bugs_cases:case_detail' case.id case.slug %}" />
       </td>
     </tr>
 </table>

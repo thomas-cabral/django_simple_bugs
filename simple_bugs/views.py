@@ -6,8 +6,6 @@ from django.utils.decorators import method_decorator
 from simple_bugs.cases.models import Case
 from simple_bugs.requirements.models import Requirement
 from simple_bugs.estimates.models import Estimate
-from . import forms
-
 
 class RequireLogin(object):
 
@@ -49,104 +47,6 @@ class Index(RequireLogin, generic.TemplateView):
         return context
 
 
-class CaseList(RequireLogin, generic.ListView):
-    template_name = 'simple_bugs/case_list.html'
-    paginate_by = 10
-    context_object_name = 'case'
-
-    def get_queryset(self):
-        return Case.objects.filter(project__group__user__id=self.request.user.id, closed=False)
-
-
-class CaseDetail(RequireLogin, generic.DetailView):
-    #model = Case
-    template_name = 'simple_bugs/case_detail.html'
-    context_object_name = 'case'
-
-    def get_queryset(self):
-        return Case.objects.filter(project__group__user__id=self.request.user.id)
-
-    def get_context_data(self, **kwargs):
-        context = super(CaseDetail, self).get_context_data(**kwargs)
-        context['estimate_list'] = Estimate.objects.filter(case__id=self.kwargs['pk'])
-        return context
-
-
-class CaseCreate(SaveUser, generic.CreateView):
-    model = Case
-    form_class = forms.CaseForm
-    template_name = 'simple_bugs/case_create.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(CaseCreate, self).get_context_data(**kwargs)
-        context['case'] = Case.objects.filter(project__group__user__id=self.request.user.id).order_by('-created_on')[:5]
-        return context
-
-
-class CaseUpdate(TrackUser, generic.UpdateView):
-    #model = Case
-    form_class = forms.CaseForm
-    template_name = 'simple_bugs/case_update.html'
-
-    def get_queryset(self):
-        return Case.objects.filter(project__group__user__id=self.request.user.id)
-
-
-class CaseDelete(RequireLogin, generic.DeleteView):
-    #model = Case
-
-    def get_queryset(self):
-        return Case.objects.filter(project__group__user__id=self.request.user.id)
-
-
-class RequirementList(RequireLogin, generic.ListView):
-    #model = Requirement
-    template_name = 'simple_bugs/requirement_list.html'
-    context_object_name = 'requirement'
-
-    def get_queryset(self):
-        return Requirement.objects.filter(project__group__user__id=self.request.user.id)
-
-
-class RequirementDetail(RequireLogin, generic.DetailView):
-    #model = Requirement
-    template_name = 'simple_bugs/requirement_detail.html'
-
-    def get_queryset(self):
-        return Requirement.objects.filter(project__group__user__id=self.request.user.id)
-
-
-class RequirementCases(RequirementDetail):
-    template_name = 'simple_bugs/requirement_cases.html'
-
-    def get_queryset(self):
-        return Requirement.objects.filter(project__group__user__id=self.request.user.id)
-
-
-class RequirementCreate(SaveUser, generic.CreateView):
-    model = Requirement
-    template_name = 'simple_bugs/requirement_create.html'
-    form_class = forms.RequirementForm
-
-    def get_context_data(self, **kwargs):
-        context = super(RequirementCreate, self).get_context_data(**kwargs)
-        context['requirement'] = Requirement.objects.filter(project__group__user__id=self.request.user.id).order_by('-created_on')[:5]
-        return context
-
-
-class RequirementUpdate(TrackUser, generic.UpdateView):
-    #model = Requirement
-    template_name = 'simple_bugs/requirement_update.html'
-    form_class = forms.RequirementForm
-
-    def get_queryset(self):
-        return Requirement.objects.filter(project__group__user__id=self.request.user.id)
-
-
-class RequirementDelete(RequireLogin, generic.DeleteView):
-    model = Requirement
-
-
 class Profile(RequireLogin, generic.TemplateView):
     template_name = 'simple_bugs/profile.html'
 
@@ -161,7 +61,7 @@ class Profile(RequireLogin, generic.TemplateView):
 
 
 class SoCool(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/socool.html'
+    template_name = 'simple_bugs/angular_templates/angular_index.html'
 
 # APIs
 
@@ -216,15 +116,15 @@ class UserDetail(generics.RetrieveAPIView):
 
 
 class List(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/list.html'
+    template_name = 'simple_bugs/angular_templates/list.html'
 
 
 class Detail(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/detail.html'
+    template_name = 'simple_bugs/angular_templates/detail.html'
 
 
 class New(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/new.html'
+    template_name = 'simple_bugs/angular_templates/new.html'
 
 
 class Search(RequireLogin, generic.TemplateView):
