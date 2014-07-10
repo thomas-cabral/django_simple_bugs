@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     url(r'^socool/pages/list/$', views.List.as_view()),
     url(r'^socool/pages/detail/$', views.Detail.as_view()),
     url(r'^socool/pages/new/$', views.New.as_view()),
+    url(r'^socool/pages/search/$', views.Search.as_view()),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)

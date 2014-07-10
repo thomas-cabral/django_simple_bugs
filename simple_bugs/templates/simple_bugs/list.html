@@ -30,13 +30,19 @@
 }
 </style>
 {% verbatim %}
-<!-- Initialize a new AngularJS app and associate it with a module named "instantSearch"-->
 <div class="row">
 <div class="col-lg-offset-4 col-lg-4">
-<input class="form-control" ng-model="search" placeholder="Search"> <br />
+<form>
+    <div class="input-group">
+        <input class="form-control" ng-model="search" placeholder="Search" ng-submit="changeTarget(search)">
+        <span class="input-group-btn">
+            <input class="btn btn-default" type="submit" ng-click="changeTarget(search)"> <br />
+        </span>
+    </div>
+</form>
 </div>
 </div>
-<div class="table-responsive">
+<div class="table-responsive" ng-if="case_detail.count >= 1">
 <table class="table table-striped" style="table-layout:fixed;">
     <thead>
     <tr>
@@ -49,10 +55,13 @@
         <th>
             Created On
         </th>
+        <th>
+            Opened By
+        </th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="case in cases.results | filter:search" class="case-animate">
+    <tr ng-repeat="case in case_detail.results" class="case-animate">
         <td>
             {{ case.pk }}
         </td>
@@ -62,9 +71,17 @@
         <td>
             {{ case.created_on| date : 'medium' }}
         </td>
+        <td>
+            {{ case.user }}
+        </td>
     </tr>
     </tbody>
 </table>
 </div>
+<div class="text-center" ng-if="case_detail.count == 0">
+    <br /><br />
+    <div class="col-lg-4 col-lg-offset-4">
+        <a class="btn btn-lg btn-primary" href="#/new">Open a Case</a>
+    </div>
+</div>
 {% endverbatim %}
-

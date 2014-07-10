@@ -46,7 +46,7 @@
 </div>
 <a id="mail-toggle" href="#" class="btn btn-default btn-sm"><span class="fa fa-envelope fa-lg fa-fw"></span></a>
 <div id="sidebar-mail-wrapper">
-
+<h3>Messaging System Coming soon  :)</h3>
 </div>
 {% endblock %}
 {% block content %}
@@ -56,33 +56,36 @@
 </div>
 </div>
 <div class="row">
-<div class="col-lg-12">
+<div class="col-lg-8">
     <div class="well well-lg">
     {{ case.detail|safe }}
     </div>
 </div>
-</div>
-<div class="row">
     <div class="col-lg-4">
-        <a class="btn btn-default" href="{% url 'simple_bugs:case_update' case.id case.slug %}">Update</a>
-    </div>
-    <div class="col-lg-4">
+
+        <a class="btn btn-sm btn-primary" href="{% url 'simple_bugs:case_update' case.id case.slug %}">Update</a>
+        <a class="btn btn-sm btn-info" href="#">Add Estimate</a>
+
         {% for estimate in estimate_list %}
             <h5>{{ estimate.get_type_display }} Estimate: {{ estimate.estimate_formatted }}</h5>
+            <p class="small">User: {{ estimate.user }}</p>
             <div class="progress">
                         {% if estimate.progress > 100 %}
-                            <div class="progress-bar progress-bar-danger" style="width:100%">{{ estimate.remaining_time }} overdue</div>
+                            <div class="progress-bar progress-bar-danger" style="width:100%">Over Estimate</div>
                         {% else %}
                             <div class="progress-bar progress-bar-info" style="width:{{ estimate.progress }}%">{{ estimate.remaining_time }} remaining</div>
                         {% endif %}
-
             </div>
         {% endfor %}
     </div>
+
 </div>
 <div class="row">
-<div class="col-lg-4">
-    <h2>Discussions <i class="fa fa-comments"></i> </h2>
+
+</div>
+<div class="row">
+<div class="col-lg-12">
+    <h2 class="text-center">Discussions <i class="fa fa-comments"></i> </h2>
 </div>
 <div class="col-lg-12">
     {% load comments crispy_forms_filters %}

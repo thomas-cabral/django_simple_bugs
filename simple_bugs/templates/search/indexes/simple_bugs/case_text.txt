@@ -1,4 +1,0 @@
-{{ object.id }}
-{{ object.title }}
-{{ object.user }}
-{{ object.detail }}
