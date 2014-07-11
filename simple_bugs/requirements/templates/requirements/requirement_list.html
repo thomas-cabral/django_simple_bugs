@@ -1,0 +1,39 @@
+{% extends 'simple_bugs/base.html' %}
+{% block content %}
+<h1 class="page-header">Requirements</h1>
+    <a class="btn btn-primary pull-right" href="{% url 'simple_bugs_requirements:requirement_create' %}"><i class="fa fa-plus fa-fw"></i> Add Requirement</a>
+<div class="row">
+<div class="col-lg-12">
+<table class="table">
+<thead>
+<tr>
+    <th>
+        Requirement
+    </th>
+    <th>
+        Date Created
+    </th>
+    <th>
+        Date Updated
+    </th>
+</tr>
+</thead>
+<tbody>
+{% for requirement in requirement %}
+<tr>
+    <td>
+        <a href="{% url 'simple_bugs_requirements:requirement_detail' requirement.id requirement.slug %}">{{ requirement.title }}</a>
+    </td>
+    <td>
+        {{ requirement.created_on }}
+    </td>
+    <td>
+        {{ requirement.updated_on }}
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

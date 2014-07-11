@@ -15,7 +15,7 @@
     {% for case in assigned_case %}
         <tr>
             <td>
-                <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
+                <a href="{% url 'simple_bugs_cases:case_detail' case.id case.slug %}">{{ case.title }}</a>
             </td>
         </tr>
     {% endfor %}
@@ -38,7 +38,7 @@
     {% for case in user_case %}
         <tr>
             <td>
-                <a href="{% url 'simple_bugs:case_detail' case.id case.slug %}">{{ case.title }}</a>
+                <a href="{% url 'simple_bugs_cases:case_detail' case.id case.slug %}">{{ case.title }}</a>
             </td>
             <td>
                 {% if case.closed == True %}
@@ -52,7 +52,7 @@
             </tbody>
             </table>
         {% if user.username == username %}
-        <a class="btn btn-primary" href="{% url 'simple_bugs:case_create' %}">Create One</a>
+        <a class="btn btn-primary" href="{% url 'simple_bugs_cases:case_create' %}">Create One</a>
         {% endif %}
     {% endfor %}
     </tbody>
@@ -71,14 +71,14 @@
     {% for requirement in user_requirement %}
         <tr>
             <td>
-                <a href="{% url 'simple_bugs:requirement_detail' requirement.id requirement.slug %}">{{ requirement.title }}</a>
+                <a href="{% url 'simple_bugs_requirements:requirement_detail' requirement.id requirement.slug %}">{{ requirement.title }}</a>
             </td>
         </tr>
         {% empty %}
             </tbody>
             </table>
         {% if user.username == username %}
-        <a class="btn btn-primary" href="{% url 'simple_bugs:requirement_create' %}">Create One</a>
+        <a class="btn btn-primary" href="{% url 'simple_bugs_requirements:requirement_create' %}">Create One</a>
         {% endif %}
     {% endfor %}
     </tbody>

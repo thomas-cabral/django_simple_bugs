@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block extrahead %}
+    {% load wysiwyg %}{% wysiwyg_setup %}
+{% endblock %}
+{% block content %}
+
+    <div ng-view class="case"></div>
+
+{% endblock %}
+{% block js %}
+{% load static %}
+    <script type="text/javascript" src="{% static 'simple_bugs/js/app_route.js' %}"></script>
+    <script type="text/javascript" src="{% static 'simple_bugs/js/controllers.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+{% endblock %}

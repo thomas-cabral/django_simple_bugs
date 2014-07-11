@@ -1,0 +1,73 @@
+{% extends 'simple_bugs/base.html' %}
+{% block extrahead %}
+    {% load wysiwyg %}{% wysiwyg_setup %}
+{% endblock %}
+{% block content %}
+    {% load crispy_forms_filters %}
+<div class="row">
+<div class="col-lg-8">
+    <div class="well">
+    <form role="form" action="{% url 'simple_bugs_cases:case_create' %}" method="post">{% csrf_token %}
+        <fieldset>
+            <legend>Create A New Case</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <input class="btn btn-primary" type="submit">
+    </form>
+    </div>
+</div>
+<div class="col-lg-4">
+{% if case %}
+<h3 class="text-center">Recent Cases</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                Type
+            </th>
+            <th>
+                ID
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for case in case %}
+        <tr>
+            <td>
+                {% if case.type == 'BUG' %}
+                <i class="fa fa-bug fa-lg fa-fw"></i>
+                {% elif case.type == 'FEATURE_REQUEST' %}
+                <i class="fa fa-lightbulb-o fa-lg fa-fw"></i>
+                {% endif %}
+            </td>
+            <td>
+                {{ case.id }}
+            </td>
+            <td>
+                <a href="{% url 'simple_bugs_cases:case_detail' case.id case.slug %}">{{ case.title }}</a>
+            </td>
+            <td>
+                {% if case.closed == False %}
+                Open
+                {% elif case.closed == True%}
+                Closed
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <h3>No Recent Cases</h3>
+{% endif %}
+
+</div>
+</div>
+{% wysiwyg_editor 'id_detail' %}
+{% endblock %}

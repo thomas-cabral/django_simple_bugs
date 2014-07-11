@@ -1,0 +1,87 @@
+<style type="text/css">
+.case-animate.ng-enter, .case-animate.ng-leave {
+    -webkit-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 800ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+}
+.case-animate.ng-leave
+{
+    -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+}
+
+.case-animate.ng-enter.case-animate.ng-enter-active,
+.case-animate.ng-leave {
+    opacity: 1;
+    height: 30px;
+}
+
+.case-animate.ng-leave.case-animate.ng-leave-active,
+.case-animate.ng-enter {
+    opacity: 0;
+    height: 0px;
+}
+</style>
+{% verbatim %}
+<div class="row">
+<div class="col-lg-offset-4 col-lg-4">
+<form>
+    <div class="input-group">
+        <input class="form-control" ng-model="search" placeholder="Search" ng-submit="changeTarget(search)">
+        <span class="input-group-btn">
+            <input class="btn btn-default" type="submit" ng-click="changeTarget(search)"> <br />
+        </span>
+    </div>
+</form>
+</div>
+</div>
+<div class="table-responsive" ng-if="case_detail.count >= 1">
+<table class="table table-striped" style="table-layout:fixed;">
+    <thead>
+    <tr>
+        <th>
+            Case ID
+        </th>
+        <th>
+            Case Title <a href="#/new"><i class="fa fa-plus-circle pull-right"></i></a>
+        </th>
+        <th>
+            Created On
+        </th>
+        <th>
+            Opened By
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="case in case_detail.results" class="case-animate">
+        <td>
+            {{ case.pk }}
+        </td>
+        <td>
+            <a href="#/detail/{{ case.pk }}"> {{ case.title }}</a>
+        </td>
+        <td>
+            {{ case.created_on| date : 'medium' }}
+        </td>
+        <td>
+            {{ case.user }}
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<div class="text-center" ng-if="case_detail.count == 0">
+    <br /><br />
+    <div class="col-lg-4 col-lg-offset-4">
+        <a class="btn btn-lg btn-primary" href="#/new">Open a Case</a>
+    </div>
+</div>
+{% endverbatim %}
