@@ -1,10 +1,15 @@
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
 
 from .models import Case
 from . import forms
 from simple_bugs.estimates.models import Estimate
+from simple_bugs.groups.models import Group
+from simple_bugs.projects.models import Project
+from simple_bugs.requirements.models import Requirement
+
 
 class RequireLogin(object):
 
@@ -68,6 +73,17 @@ class CaseCreate(SaveUser, generic.CreateView):
         context['case'] = Case.objects.filter(project__group__user__id=self.request.user.id).order_by('-created_on')[:5]
         return context
 
+    def get_form(self, form_class):
+        """
+        Returns an instance of the form to be used in this view.
+        """
+        group = Group.objects.filter(user__id=self.request.user.id)
+        form = super(CaseCreate, self).get_form(form_class)
+        form.fields['assigned_to'].queryset = User.objects.filter(group_user_list=group)
+        form.fields['project'].queryset = Project.objects.filter(group__user__id=self.request.user.id)
+        form.fields['requirement'].queryset = Requirement.objects.filter(project__group__user__id=group)
+        return form
+
 
 class CaseUpdate(TrackUser, generic.UpdateView):
     #model = Case
@@ -76,6 +92,17 @@ class CaseUpdate(TrackUser, generic.UpdateView):
 
     def get_queryset(self):
         return Case.objects.filter(project__group__user__id=self.request.user.id)
+
+    def get_form(self, form_class):
+        """
+        Returns an instance of the form to be used in this view.
+        """
+        group = Group.objects.filter(user__id=self.request.user.id)
+        form = super(CaseUpdate, self).get_form(form_class)
+        form.fields['assigned_to'].queryset = User.objects.filter(group_user_list=group)
+        form.fields['project'].queryset = Project.objects.filter(group__user__id=self.request.user.id)
+        form.fields['requirement'].queryset = Requirement.objects.filter(project__group__user__id=group)
+        return form
 
 
 class CaseDelete(RequireLogin, generic.DeleteView):

@@ -46,7 +46,7 @@ class Case(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return 'simple_bugs:case_detail', (), {'pk': self.pk, 'slug': self.slug}
+        return 'simple_bugs_cases:case_detail', (), {'pk': self.pk, 'slug': self.slug}
 
     def save(self, *args, **kwargs):
         if not self.id:

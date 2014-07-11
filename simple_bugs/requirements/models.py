@@ -39,7 +39,7 @@ class Requirement(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return 'simple_bugs:requirement_detail', (), {'pk': self.pk, 'slug': self.slug}
+        return 'simple_bugs_requirements:requirement_detail', (), {'pk': self.pk, 'slug': self.slug}
 
     def save(self, *args, **kwargs):
         if not self.id:

@@ -2,6 +2,10 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+from django.contrib.auth.models import User
+from simple_bugs.groups.models import Group
+from simple_bugs.projects.models import Project
+
 from .models import Requirement
 from . import forms
 
@@ -69,6 +73,17 @@ class RequirementCreate(SaveUser, generic.CreateView):
         context['requirement'] = Requirement.objects.filter(project__group__user__id=self.request.user.id).order_by('-created_on')[:5]
         return context
 
+    def get_form(self, form_class):
+        """
+        Returns an instance of the form to be used in this view.
+        """
+        group = Group.objects.filter(user__id=self.request.user.id)
+        form = super(RequirementCreate, self).get_form(form_class)
+        form.fields['working_on'].queryset = User.objects.filter(group_user_list=group)
+        form.fields['project'].queryset = Project.objects.filter(group__user__id=self.request.user.id)
+        return form
+
+
 
 class RequirementUpdate(TrackUser, generic.UpdateView):
     #model = Requirement
@@ -77,6 +92,16 @@ class RequirementUpdate(TrackUser, generic.UpdateView):
 
     def get_queryset(self):
         return Requirement.objects.filter(project__group__user__id=self.request.user.id)
+
+    def get_form(self, form_class):
+        """
+        Returns an instance of the form to be used in this view.
+        """
+        group = Requirement.objects.filter(project__group__user__id=self.request.user.id)
+        form = super(RequirementUpdate, self).get_form(form_class)
+        form.fields['working_on'].queryset = User.objects.filter(group_user_list=group)
+        form.fields['project'].queryset = Project.objects.filter(group__user__id=self.request.user.id)
+        return form
 
 
 class RequirementDelete(RequireLogin, generic.DeleteView):
