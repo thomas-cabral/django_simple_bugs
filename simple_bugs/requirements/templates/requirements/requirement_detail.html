@@ -48,6 +48,8 @@
 
 </div>
 {% endblock %}
+
+
 {% block content %}
 <div class="row">
 <div class="col-sm-12">
@@ -55,22 +57,20 @@
 </div>
 </div>
 <div class="row">
-<div class="col-sm-12">
+<div class="col-sm-10">
     <div class="well well-lg">
     {{ requirement.detail|safe }}
     </div>
 </div>
-</div>
-<div class="row">
-<div class="col-lg-offset-4 col-lg-4">
+<div class="col-lg-2">
 {% if requirement.working_on %}
-<div class="panel panel-info">
-  <div class="panel-heading">
+<div class="">
+  <div class="">
     <h3 class="panel-title">Users working on Requirement</h3>
   </div>
-  <div class="panel-body">
+  <div class="">
     {% for user in requirement.working_on.all %}
-        <a href="{% url 'simple_bugs:profile' user.username %}"><span class="label label-primary"> {{ user.username }}</span></a>
+        <a class="btn btn-primary btn-xs" href="{% url 'simple_bugs:profile' user.username %}"> <span>{{ user.username }}</span></a>
     {% endfor %}
   </div>
 </div>

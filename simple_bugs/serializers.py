@@ -17,7 +17,7 @@ class CaseSerializer(serializers.Serializer):
     detail = serializers.CharField(widget=widgets.Textarea, max_length=100000)
     closed = serializers.BooleanField(required=False)
     slug = serializers.SlugField(required=False)
-    created_on = serializers.DateTimeField()
+    created_on = serializers.DateTimeField(required=False)
     user = serializers.Field(source='user.username')
 
     def restore_object(self, attrs, instance=None):

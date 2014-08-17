@@ -5,7 +5,9 @@ from django.utils.decorators import method_decorator
 
 from simple_bugs.cases.models import Case
 from simple_bugs.requirements.models import Requirement
+from simple_bugs.groups.models import Group
 from simple_bugs.estimates.models import Estimate
+
 
 class RequireLogin(object):
 
@@ -59,10 +61,6 @@ class Profile(RequireLogin, generic.TemplateView):
                                                        assigned_to__username=self.kwargs['username'])
         return context
 
-
-class SoCool(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/angular_templates/angular_index.html'
-
 # APIs
 
 from rest_framework import permissions, generics, filters
@@ -71,19 +69,24 @@ from django.contrib.auth.models import User
 
 
 class RequirementsApiList(generics.ListAPIView):
-    queryset = Requirement.objects.all()
     serializer_class = RequirementSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        user = self.request.user
+        return Requirement.objects.filter(project__group__user__id=user.id)
 
 
 class RequirementsAPIDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Requirement.objects.all()
     serializer_class = RequirementSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+    def get_queryset(self):
+        user = self.request.user
+        return Requirement.objects.filter(project__group__user__id=user.id)
+
 
 class CaseAPIList(generics.ListCreateAPIView):
-    queryset = Case.objects.filter(closed=False)
     serializer_class = CaseSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -93,14 +96,21 @@ class CaseAPIList(generics.ListCreateAPIView):
     def pre_save(self, obj):
         obj.user = self.request.user
 
+    def get_queryset(self):
+        user = self.request.user
+        return Case.objects.filter(project__group__user__id=user.id).order_by('closed')
+
 
 class CaseAPIDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Case.objects.all()
     serializer_class = CaseSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     def pre_save(self, obj):
         obj.user = self.request.user
+
+    def get_queryset(self):
+        user = self.request.user
+        return Case.objects.filter(project__group__user__id=user.id)
 
 
 class UserList(generics.ListAPIView):
@@ -113,18 +123,6 @@ class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated,)
-
-
-class List(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/angular_templates/list.html'
-
-
-class Detail(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/angular_templates/detail.html'
-
-
-class New(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/angular_templates/new.html'
 
 
 class Search(RequireLogin, generic.TemplateView):

@@ -34,15 +34,14 @@
 <div class="col-lg-offset-4 col-lg-4">
 <form>
     <div class="input-group">
-        <input class="form-control" ng-model="search" placeholder="Search" ng-submit="changeTarget(search)">
+        <input class="form-control" ng-model="search_query" placeholder="Search" ng-submit="search()">
         <span class="input-group-btn">
-            <input class="btn btn-default" type="submit" ng-click="changeTarget(search)"> <br />
+            <input class="btn btn-default" type="submit" ng-click="search()"> <br />
         </span>
     </div>
 </form>
 </div>
 </div>
-<div class="table-responsive" ng-if="case_detail.count >= 1">
 <table class="table table-striped" style="table-layout:fixed;">
     <thead>
     <tr>
@@ -61,7 +60,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="case in case_detail.results" class="case-animate">
+    <tr ng-repeat="case in cases" class="case-animate">
         <td>
             {{ case.pk }}
         </td>
@@ -77,7 +76,6 @@
     </tr>
     </tbody>
 </table>
-</div>
 <div class="text-center" ng-if="case_detail.count == 0">
     <br /><br />
     <div class="col-lg-4 col-lg-offset-4">

@@ -14,11 +14,6 @@ urlpatterns = patterns('',
     url(r'^api/cases/(?P<pk>[0-9]+)/$', views.CaseAPIDetail.as_view()),
     url(r'^api/users/$', views.UserList.as_view()),
     url(r'^api/users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
-    url(r'^socool/$', views.SoCool.as_view(), name='socool'),
-    url(r'^socool/pages/list/$', views.List.as_view()),
-    url(r'^socool/pages/detail/$', views.Detail.as_view()),
-    url(r'^socool/pages/new/$', views.New.as_view()),
-    url(r'^socool/pages/search/$', views.Search.as_view()),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)
