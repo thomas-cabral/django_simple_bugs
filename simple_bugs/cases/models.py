@@ -55,3 +55,21 @@ class Case(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class TestCase(models.Model):
+    case = models.ForeignKey(Case, related_name='test_cases')
+    title = models.CharField(max_length=55)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class TestStep(models.Model):
+    test_case = models.ForeignKey(TestCase, related_name='test_steps')
+    title = models.CharField(max_length=55)
+    data = models.TextField()
+
+    def __str__(self):
+        return self.title

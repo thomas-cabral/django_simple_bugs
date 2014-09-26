@@ -3,8 +3,10 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from simple_bugs.cases.models import Case
+from simple_bugs.cases.models import Case, TestCase
+from simple_bugs.projects.models import Project
 from simple_bugs.requirements.models import Requirement
+from simple_bugs.projects.serializers import ProjectSerializer
 from simple_bugs.groups.models import Group
 from simple_bugs.estimates.models import Estimate
 
@@ -44,8 +46,11 @@ class Index(RequireLogin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
         context['case_count'] = Case.objects.filter(project__group__user__id=self.request.user.id).count()
-        context['recent_bugs'] = Case.objects.filter(project__group__user__id=self.request.user.id, type='BUG', closed=False).order_by('-created_on')[:10]
-        context['recent_features'] = Case.objects.filter(project__group__user__id=self.request.user.id, type='FEATURE_REQUEST', closed=False).order_by('-created_on')[:10]
+        context['recent_bugs'] = Case.objects.filter(project__group__user__id=self.request.user.id, type='BUG',
+                                                     closed=False).order_by('-created_on')[:10]
+        context['recent_features'] = Case.objects.filter(
+            project__group__user__id=self.request.user.id,
+            type='FEATURE_REQUEST', closed=False).order_by('-created_on')[:10]
         return context
 
 
@@ -64,7 +69,9 @@ class Profile(RequireLogin, generic.TemplateView):
 # APIs
 
 from rest_framework import permissions, generics, filters
-from .serializers import CaseSerializer, UserSerializer, RequirementSerializer
+from .serializers import UserSerializer
+from simple_bugs.requirements.serializers import RequirementSerializer
+from simple_bugs.cases.serializers import CaseSerializer, TestCaseSerializer
 from django.contrib.auth.models import User
 
 
@@ -97,8 +104,7 @@ class CaseAPIList(generics.ListCreateAPIView):
         obj.user = self.request.user
 
     def get_queryset(self):
-        user = self.request.user
-        return Case.objects.filter(project__group__user__id=user.id).order_by('closed')
+        return Case.objects.filter().order_by('closed')
 
 
 class CaseAPIDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -113,6 +119,24 @@ class CaseAPIDetail(generics.RetrieveUpdateDestroyAPIView):
         return Case.objects.filter(project__group__user__id=user.id)
 
 
+class ProjectList(generics.ListAPIView):
+    serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    model = Project
+
+
+class ProjectDetail(generics.RetrieveAPIView):
+    serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    model = Project
+
+
+class TestCaseDetail(generics.RetrieveAPIView):
+    serializer_class = TestCaseSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    model = TestCase
+
+
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -123,7 +147,3 @@ class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated,)
-
-
-class Search(RequireLogin, generic.TemplateView):
-    template_name = 'simple_bugs/search.html'

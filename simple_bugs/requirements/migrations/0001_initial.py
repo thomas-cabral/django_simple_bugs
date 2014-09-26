@@ -1,146 +1,58 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+from django.conf import settings
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'HistoricalRequirement'
-        db.create_table(u'requirements_historicalrequirement', (
-            (u'id', self.gf('django.db.models.fields.IntegerField')(db_index=True, blank=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=55)),
-            ('detail', self.gf('django.db.models.fields.TextField')()),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, null=True, blank=True)),
-            ('created_on', self.gf('django.db.models.fields.DateTimeField')(blank=True)),
-            ('updated_on', self.gf('django.db.models.fields.DateTimeField')(blank=True)),
-            (u'user_id', self.gf('django.db.models.fields.IntegerField')(db_index=True, null=True, blank=True)),
-            (u'changed_by_id', self.gf('django.db.models.fields.IntegerField')(db_index=True, null=True, blank=True)),
-            (u'project_id', self.gf('django.db.models.fields.IntegerField')(db_index=True, null=True, blank=True)),
-            (u'history_id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            (u'history_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            (u'history_user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
-            (u'history_type', self.gf('django.db.models.fields.CharField')(max_length=1)),
-        ))
-        db.send_create_signal(u'requirements', ['HistoricalRequirement'])
+    dependencies = [
+        ('projects', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
 
-        # Adding model 'Requirement'
-        db.create_table(u'requirements_requirement', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=55)),
-            ('detail', self.gf('django.db.models.fields.TextField')()),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, null=True, blank=True)),
-            ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('updated_on', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='requirements_user', to=orm['auth.User'])),
-            ('changed_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='requirement_changed_by', null=True, to=orm['auth.User'])),
-            ('project', self.gf('django.db.models.fields.related.ForeignKey')(related_name='requirement_project', to=orm['projects.Project'])),
-        ))
-        db.send_create_signal(u'requirements', ['Requirement'])
-
-        # Adding M2M table for field working_on on 'Requirement'
-        m2m_table_name = db.shorten_name(u'requirements_requirement_working_on')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('requirement', models.ForeignKey(orm[u'requirements.requirement'], null=False)),
-            ('user', models.ForeignKey(orm[u'auth.user'], null=False))
-        ))
-        db.create_unique(m2m_table_name, ['requirement_id', 'user_id'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'HistoricalRequirement'
-        db.delete_table(u'requirements_historicalrequirement')
-
-        # Deleting model 'Requirement'
-        db.delete_table(u'requirements_requirement')
-
-        # Removing M2M table for field working_on on 'Requirement'
-        db.delete_table(db.shorten_name(u'requirements_requirement_working_on'))
-
-
-    models = {
-        u'auth.group': {
-            'Meta': {'object_name': 'Group'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
-        },
-        u'auth.permission': {
-            'Meta': {'ordering': "(u'content_type__app_label', u'content_type__model', u'codename')", 'unique_together': "((u'content_type', u'codename'),)", 'object_name': 'Permission'},
-            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        u'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Group']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
-        },
-        u'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        u'groups.group': {
-            'Meta': {'object_name': 'Group'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'user': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'group_user_list'", 'symmetrical': 'False', 'to': u"orm['auth.User']"})
-        },
-        u'projects.project': {
-            'Meta': {'object_name': 'Project'},
-            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'group': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'project_group'", 'to': u"orm['groups.Group']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '55'})
-        },
-        u'requirements.historicalrequirement': {
-            'Meta': {'ordering': "(u'-history_date', u'-history_id')", 'object_name': 'HistoricalRequirement'},
-            u'changed_by_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True', 'null': 'True', 'blank': 'True'}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'blank': 'True'}),
-            'detail': ('django.db.models.fields.TextField', [], {}),
-            u'history_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'history_id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            u'history_type': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
-            u'history_user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'null': 'True'}),
-            u'id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True', 'blank': 'True'}),
-            u'project_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True', 'null': 'True', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '55'}),
-            'updated_on': ('django.db.models.fields.DateTimeField', [], {'blank': 'True'}),
-            u'user_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True', 'null': 'True', 'blank': 'True'})
-        },
-        u'requirements.requirement': {
-            'Meta': {'ordering': "['-created_on']", 'object_name': 'Requirement'},
-            'changed_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'requirement_changed_by'", 'null': 'True', 'to': u"orm['auth.User']"}),
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'detail': ('django.db.models.fields.TextField', [], {}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'project': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'requirement_project'", 'to': u"orm['projects.Project']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '55'}),
-            'updated_on': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'requirements_user'", 'to': u"orm['auth.User']"}),
-            'working_on': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'working_on'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['auth.User']"})
-        }
-    }
-
-    complete_apps = ['requirements']
+    operations = [
+        migrations.CreateModel(
+            name='HistoricalRequirement',
+            fields=[
+                ('id', models.IntegerField(auto_created=True, blank=True, db_index=True, verbose_name='ID')),
+                ('title', models.CharField(max_length=55)),
+                ('detail', models.TextField()),
+                ('slug', models.SlugField(blank=True, null=True)),
+                ('created_on', models.DateTimeField(blank=True, editable=False)),
+                ('updated_on', models.DateTimeField(blank=True, editable=False)),
+                ('user_id', models.IntegerField(blank=True, db_index=True, null=True)),
+                ('changed_by_id', models.IntegerField(blank=True, db_index=True, null=True)),
+                ('project_id', models.IntegerField(blank=True, db_index=True, null=True)),
+                ('history_id', models.AutoField(primary_key=True, serialize=False)),
+                ('history_date', models.DateTimeField()),
+                ('history_type', models.CharField(max_length=1, choices=[('+', 'Created'), ('~', 'Changed'), ('-', 'Deleted')])),
+                ('history_user', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
+            ],
+            options={
+                'verbose_name': 'historical requirement',
+                'ordering': ('-history_date', '-history_id'),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Requirement',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
+                ('title', models.CharField(max_length=55)),
+                ('detail', models.TextField()),
+                ('slug', models.SlugField(blank=True, null=True)),
+                ('created_on', models.DateTimeField(auto_now_add=True)),
+                ('updated_on', models.DateTimeField(auto_now=True)),
+                ('changed_by', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, related_name='requirement_changed_by', null=True)),
+                ('project', models.ForeignKey(related_name='requirement_project', to='projects.Project')),
+                ('user', models.ForeignKey(related_name='requirements_user', to=settings.AUTH_USER_MODEL)),
+                ('working_on', models.ManyToManyField(related_name='working_on', blank=True, null=True, to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+                'ordering': ['-created_on'],
+            },
+            bases=(models.Model,),
+        ),
+    ]

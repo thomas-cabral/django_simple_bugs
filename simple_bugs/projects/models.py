@@ -12,7 +12,7 @@ class Project(models.Model):
     title = models.CharField(max_length=55)
     description = models.TextField(blank=True, null=True)
     slug = models.SlugField(blank=True, null=True)
-    group = models.ForeignKey(Group, related_name="project_group")
+    group = models.ForeignKey(Group, related_name='project_group')
 
     def save(self, *args, **kwargs):
         if not self.id:

@@ -2,13 +2,13 @@
 <a class="btn btn-primary" href="#/">Home</a>
 <div class="row">
 <div class="col-lg-12">
-<h1 class='page-header'>{{ case_detail.title }} <small>{{ case_detail.type }}</small></h1>
+<h1 class='page-header' contenteditable="true">{{ case_detail.title }} <small>{{ case_detail.type }}</small></h1>
 </div>
 </div>
 <div class="row">
 <div class="col-lg-12">
     <div class="well well-lg">
-    <div ng-bind-html="case_detail.detail"></div>
+    <div ng-bind-html="case_detail.detail" contenteditable="true"></div>
     </div>
 </div>
 </div>

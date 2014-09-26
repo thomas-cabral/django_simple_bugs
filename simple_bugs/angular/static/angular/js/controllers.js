@@ -19,6 +19,13 @@ caseApp.run( function run($http, $cookies ){
 });
 
 
+function CaseDetail($scope, $routeParams, $http) {
+    $http.get('/api/cases/' + $routeParams.caseId).success(function(data) {
+        //console.log(data);
+        $scope.case_detail = data;
+    });
+}
+
 caseApp.controller('CaseList', ['$scope', '$routeParams', '$http', 'CaseFactory', 'CasesFactory', '$location',
     function ($scope, $routeParams, $http, CaseFactory, CasesFactory) {
 

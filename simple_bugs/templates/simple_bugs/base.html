@@ -34,7 +34,7 @@ body {
 }
 </style>
 {% block navbar %}
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-inverse" role="navigation">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -74,8 +74,8 @@ body {
         <p class="text-muted">Simple Bugs tracking tool.</p>
       </div>
 </div>
-    <script src="{% static 'simple_bugs/../../angular/static/angular/../../angular/static/simple_bugs/js/jquery.js' %}"></script>
-    <script src="{% static 'simple_bugs/../../angular/static/angular/../../angular/static/simple_bugs/js/../../static/simple_bugs/js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'simple_bugs/js/jquery.js' %}"></script>
+    <script src="{% static 'simple_bugs/js/bootstrap.min.js' %}" type="text/javascript"></script>
 {% block js %}{% endblock %}
 </body>
 </html>
