@@ -26,6 +26,14 @@ function CaseDetail($scope, $routeParams, $http) {
     });
 }
 
+caseApp.controller('CaseNew', ['$scope', 'CasesFactory',
+    function ($scope, CasesFactory) {
+        $scope.save = function () {
+            CasesFactory.create($scope.case);
+        };
+    }
+]);
+
 caseApp.controller('CaseList', ['$scope', '$routeParams', '$http', 'CaseFactory', 'CasesFactory', '$location',
     function ($scope, $routeParams, $http, CaseFactory, CasesFactory) {
 
