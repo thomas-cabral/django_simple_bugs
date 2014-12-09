@@ -1,7 +1,12 @@
 # Create your views here.
 from django.views import generic
+from rest_framework import generics
+from rest_framework import permissions
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+
+from .models import Case, Requirement, Project, Comment
+from .serializers import CaseSerializer, RequirementSerializer, ProjectSerializer, CommentSerializer
 
 
 class RequireLogin(object):
@@ -33,3 +38,34 @@ class TrackUser(RequireLogin):
         return super(TrackUser, self).form_valid(form)
 
 
+class Index(generic.TemplateView):
+    template_name = 'simple_bugs/index.html'
+
+
+class CaseList(generics.ListCreateAPIView):
+    model = Case
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class = CaseSerializer
+
+
+class CaseDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Case
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class = CaseSerializer
+
+
+class RequirementList(generics.ListCreateAPIView):
+    model = Requirement
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class = RequirementSerializer
+
+
+class ProjectList(generics.ListCreateAPIView):
+    model = Project
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class = ProjectSerializer
+
+
+class CommentList(generics.ListCreateAPIView):
+    model = Comment
+    serializer_class = CommentSerializer
