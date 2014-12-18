@@ -12,15 +12,10 @@ var caseApp = angular.module('caseApp', ['ngRoute', 'ngAnimate', 'ngSanitize', '
                 controller : 'CaseList'
             }).
 			// route for the about page
-			when('/detail/:caseId', {
+			when('/case/:id', {
 				templateUrl : '/angular/pages/detail',
 				controller  : 'CaseDetail'
 			}).
-            //route for new page
-            when('/new', {
-                templateUrl : '/angular/pages/new',
-                controller : 'CaseNew'
-            }).
 
             otherwise({redirectTo: '/'});
 

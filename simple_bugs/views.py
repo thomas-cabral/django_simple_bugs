@@ -5,37 +5,8 @@ from rest_framework import permissions
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from .models import Case, Requirement, Project, Comment
-from .serializers import CaseSerializer, RequirementSerializer, ProjectSerializer, CommentSerializer
-
-
-class RequireLogin(object):
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(RequireLogin, self).dispatch(*args, **kwargs)
-
-
-class SaveUser(RequireLogin):
-    """
-    Mixin to save user to model
-    """
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.save(commit=True)
-        return super(SaveUser, self).form_valid(form)
-
-
-class TrackUser(RequireLogin):
-    """
-    Mixin for tracking user on change
-    """
-
-    def form_valid(self, form):
-        form.instance.changed_by = self.request.user
-        form.save(commit=True)
-        return super(TrackUser, self).form_valid(form)
+from .models import Case, Requirement, Project
+from .serializers import CaseSerializer, RequirementSerializer, ProjectSerializer
 
 
 class Index(generic.TemplateView):
@@ -43,29 +14,33 @@ class Index(generic.TemplateView):
 
 
 class CaseList(generics.ListCreateAPIView):
-    model = Case
+    queryset = Case.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = CaseSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class CaseDetail(generics.RetrieveUpdateDestroyAPIView):
-    model = Case
+    queryset = Case.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = CaseSerializer
 
 
 class RequirementList(generics.ListCreateAPIView):
-    model = Requirement
+    queryset = Requirement.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = RequirementSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class ProjectList(generics.ListCreateAPIView):
-    model = Project
+    queryset = Project.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = ProjectSerializer
 
 
-class CommentList(generics.ListCreateAPIView):
-    model = Comment
-    serializer_class = CommentSerializer
+
