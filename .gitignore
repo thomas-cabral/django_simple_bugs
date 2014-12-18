@@ -40,3 +40,5 @@ output/*/index.html
 
 # Sphinx
 docs/_build
+django_simple_bugs
+django_simple_bugs/settings.py
