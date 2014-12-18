@@ -1,4 +1,4 @@
 django>=1.7
 wheel==0.22.0
 # Additional requirements go here
-djangorestframework>=2.4.4
+djangorestframework>=3.0
